@@ -32,6 +32,7 @@ print("time to find image: %d sec" % (time.time() - start))
 
 # 학습자료 시각화
 <<<<<<< HEAD
+<<<<<<< HEAD
 # plt.figure(figsize=(10, 10))
 # for i in range(16):
 #     ax = plt.subplot(4, 4, i + 1)
@@ -40,6 +41,8 @@ print("time to find image: %d sec" % (time.time() - start))
 #     plt.axis("off")
 # plt.show()
 =======
+=======
+>>>>>>> 9ca4c642adefe2afe667922caf660d0c83001757
 plt.figure(figsize=(10, 10))
 for i in range(16):
     ax = plt.subplot(4, 4, i + 1)
@@ -47,6 +50,9 @@ for i in range(16):
     plt.title(y[i])
     plt.axis("off")
 plt.show()
+<<<<<<< HEAD
+>>>>>>> 9ca4c642adefe2afe667922caf660d0c83001757
+=======
 >>>>>>> 9ca4c642adefe2afe667922caf660d0c83001757
 
 # Convert the data to numpy arrays
