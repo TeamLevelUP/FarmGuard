@@ -7,8 +7,10 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 # Define the data path
-# os.chdir(os.path.dirname(__file__))
-data_path = 'data'
+
+# 학습데이터: 정상 10,765장 / 질병 3,167장
+# data_path = 'data'
+data_path = 'G:/내 드라이브/TUKorea/캡스톤디자인/data/1.Training/원천데이터/05.상추'
 
 # Load the images and labels
 x, y = [], []
@@ -19,13 +21,14 @@ for class_folder in os.listdir(data_path):
         x.append(np.array(img))
         y.append(int(class_folder))
 
-# plt.figure(figsize=(10, 10))
-# for i in range(16):
-#     ax = plt.subplot(4, 4, i + 1)
-#     plt.imshow(x[i].astype("uint8"))
-#     plt.title(y[i])
-#     plt.axis("off")
-# plt.show()
+# 학습자료 시각화
+plt.figure(figsize=(10, 10))
+for i in range(16):
+    ax = plt.subplot(4, 4, i + 1)
+    plt.imshow(x[i].astype("uint8"))
+    plt.title(y[i])
+    plt.axis("off")
+plt.show()
 
 # Convert the data to numpy arrays
 x = np.array(x)
