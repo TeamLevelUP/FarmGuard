@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import time
 
 # Define the data path
-
 # 학습데이터: 정상 10,765장 / 질병 3,167장
 # data_path = 'data'
 data_path = 'G:/내 드라이브/TUKorea/캡스톤디자인/data/1.Training/원천데이터/05.상추'
@@ -28,7 +27,8 @@ for class_folder in os.listdir(data_path):
         y.append(int(class_folder))
         image_num += 1
     folder_num += 1
-print("time to find image: %d sec" % (time.time() - start))
+time_to_find_image = time.time() - start
+# print("time to find image: %d sec" % (time.time() - start))
 
 # 학습자료 시각화
 
@@ -39,7 +39,6 @@ print("time to find image: %d sec" % (time.time() - start))
 #     plt.title(y[i])
 #     plt.axis("off")
 # plt.show()
-
 
 # Convert the data to numpy arrays
 x = np.array(x)
@@ -62,14 +61,16 @@ start = time.time() # 모델 훈련하는 시간 측정
 model = keras.Sequential()
 # 필터 구성
 # 컨볼루션 2D 레이어: 필터로 특징을 뽑아냄
-#
+
 # 필터의 개수 = 32, 필터의 크기 = (3, 3), padding(입출력 개수) = same (or valid)
-# activation(활성화 함수) = relu(rectifier 함수, 은닉층에 주로 쓰입니다.), input_shape(입출력형태, 첫 레이어에서만 정의) = (224, 224, 3)
+# activation(활성화 함수) = relu(rectifier 함수, 은닉층에 주로 쓰입니다.)
 model.add(keras.layers.Conv2D(32, (3, 3), padding='same', activation='relu', input_shape=(224, 224, 3)))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Flatten())
 # 출력 뉴런의 수 = 64
 model.add(keras.layers.Dense(64, activation = 'relu'))
+# 출력 뉴런의 0.8만 사용 - 과적합 방지를 위함
+model.add(tf.keras.layers.Dropout(0.5))
 # 출력 뉴런의 수 = 2, 'softmax': 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
 model.add(keras.layers.Dense(2, activation = 'softmax'))
 # model.add(keras.layers.Dense(2, activation = 'sigmoid'))
@@ -78,8 +79,9 @@ model.add(keras.layers.Dense(2, activation = 'softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(x_train, y_train, batch_size = 32, epochs = 5, validation_data = (x_test, y_test))
-print("time to train model: %d sec" % (time.time() - start))
+history = model.fit(x_train, y_train, batch_size = 32, epochs = 10, validation_data = (x_test, y_test))
+time_to_train_model = time.time() - start
+# print("time to train model: %d sec" % (time.time() - start))
 
 # Evaluate the model on the test data
 test_loss, test_acc = model.evaluate(x_test, y_test)
@@ -88,16 +90,22 @@ print('Test accuracy:', test_acc)
 # Save the model to a file
 model.save('model.h5')
 
+# Check the time
+print("time to find image: %d min %d sec" % (time_to_find_image / 60, time_to_find_image % 60))
+print("time to train model: %d min %d sec" % (time_to_train_model / 60, time_to_train_model % 60))
+
+
 # Plot the training and validation accuracy
+plt.subplot(1, 2, 1)
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
 plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Validation'], loc='upper left')
-plt.show()
 
 # Plot the training and validation loss
+plt.subplot(1, 2, 2)
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('Model loss')
