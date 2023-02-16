@@ -69,8 +69,8 @@ model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Flatten())
 # 출력 뉴런의 수 = 64
 model.add(keras.layers.Dense(64, activation = 'relu'))
-# 출력 뉴런의 0.8만 사용 - 과적합 방지를 위함
-model.add(tf.keras.layers.Dropout(0.5))
+# 출력 뉴런의 일부만 사용 - 과적합 방지를 위함
+model.add(tf.keras.layers.Dropout(0.2))
 # 출력 뉴런의 수 = 2, 'softmax': 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
 model.add(keras.layers.Dense(2, activation = 'softmax'))
 # model.add(keras.layers.Dense(2, activation = 'sigmoid'))
