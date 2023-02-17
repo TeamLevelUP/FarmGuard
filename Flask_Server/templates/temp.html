@@ -28,11 +28,14 @@
   }
   .container {
     display: flex;
+    /*flex-direction: row;*/
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     height: calc(100vh - 80px);
   }
   .container .content {
+    font-size: 128px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +78,8 @@
       </div>
     </div>
 
-    <div style="width:30%;">
+    <div class="container">
+    <div style="width:70%;">
         <canvas id="canvas"></canvas>
     </div>
     <script>
@@ -86,7 +90,7 @@
             datasets: [{
                 label: '{{ label }}',
                 data: {{ dataset | tojson }},
-                borderColor: "rgba(247, 16, 74, 1)",
+                borderColor: "rgba(16, 74, 247, 1)",
                 fill: false,
                 lineTension: 0
             }]
@@ -124,8 +128,8 @@
         }
     });
     </script>
-    <div class="container">
       <div class="content">
+          <h2>{{userid}}님의 농장 정보입니다.</h2>
       </div>
     </div>
   </body>

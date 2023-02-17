@@ -19,43 +19,43 @@
         color: white;
         margin:
           0;
-    }
-    .header a {
-      color: white;
-      text-decoration: none;
-      margin-left: 10px;
-    }
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: calc(100vh - 80px);
-    }
-    .container .content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .container img {
-      max-width: 50%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .container .buttons {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
-    .container .buttons button {
-      margin-bottom: 20px;
-    }
+  }
+  .header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px);
+  }
+  .container .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .container img {
+    max-width: 50%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .container .buttons {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  .container .buttons button {
+    margin-bottom: 20px;
+  }
   </style>
 
   </head>
@@ -74,9 +74,14 @@
       </div>
     </div>
     <div class="container">
-      <div class="content">
-
-      </div>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!--    <img src="static/images/{{filename}}" alt="lecttuce" style="width:700px; height:700px;">-->
+            <img src="static/images/input_image.jpg" alt="input lecttuce" style="width:700px; height:700px;">
+            <h3 style="text-align: center;">Image "{{ filename }}" uploaded successfully!</h3>
+            <h3 style="text-align: center;">This plant is {{disease_class}}</h3>
+            <a href="{{ url_for('index') }}" style="margin-top: 20px; text-align: center;">Go back</a>
+        </div>
     </div>
   </body>
 </html>
+

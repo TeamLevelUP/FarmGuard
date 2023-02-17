@@ -19,43 +19,44 @@
         color: white;
         margin:
           0;
-    }
-    .header a {
-      color: white;
-      text-decoration: none;
-      margin-left: 10px;
-    }
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: calc(100vh - 80px);
-    }
-    .container .content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .container img {
-      max-width: 50%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .container .buttons {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
-    .container .buttons button {
-      margin-bottom: 20px;
-    }
+  }
+  .header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px);
+  }
+  .container .content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .container img {
+    max-width: 50%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .container .buttons {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  .container .buttons button {
+    margin-bottom: 20px;
+  }
   </style>
 
   </head>
@@ -75,7 +76,16 @@
     </div>
     <div class="container">
       <div class="content">
-
+        <img src="static/images/lecttuce.jpg" alt="lecttuce">
+        <h2>Image Upload</h2>
+      <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <input type="file" name="image">
+        </div>
+        <div class="buttons">
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
       </div>
     </div>
   </body>
