@@ -63,14 +63,14 @@
     <div class="header">
       <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
       <div>
-        {% if userid == None %}
-        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
-        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
-        {% else %}
-        <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
-        <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
-        {% endif %}
-        <!--<button class="btn btn-primary">Button 4</button>-->
+          {% if userid %}
+          <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
+          <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+          {% else %}
+          <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
+          <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
+          {% endif %}
+          <!--<button class="btn btn-primary">Button 4</button>-->
       </div>
     </div>
     <div class="container">

@@ -27,6 +27,7 @@
       }
       .container {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         height: calc(100vh - 80px);
@@ -63,22 +64,24 @@
     <div class="header">
       <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
       <div>
-        {% if userid == None %}
-        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
-        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
-        {% else %}
+        {% if userid %}
         <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
         <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+        {% else %}
+        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
+        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
         {% endif %}
         <!--<button class="btn btn-primary">Button 4</button>-->
       </div>
     </div>
     <div class="container">
       <div class="content">
-          <button onclick="window.location.href='/myfarm/temp'" class="btn btn-primary">온도</button>
-          <button onclick="window.location.href='/myfarm/hum'" class="btn btn-secondary">습도</button>
-          <button onclick="window.location.href='/myfarm/ilum'" class="btn btn-danger">조도</button>
+        <button onclick="window.location.href='/myfarm/temp'" class="btn btn-primary">온도</button>
+        <button onclick="window.location.href='/myfarm/hum'" class="btn btn-secondary">습도</button>
+        <button onclick="window.location.href='/myfarm/ilum'" class="btn btn-danger">조도</button>
       </div>
+      <h2>{{userid}}님의 농장 정보입니다.</h2>
+
     </div>
   </body>
 </html>

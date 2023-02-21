@@ -15,14 +15,17 @@ app.secret_key = 'sa!$@21d!@3qoiop][sa'
 
 @app.route('/')
 def index():
-    if len(session) == 0:
-        return render_template('index.html', userid = None)
+    # if len(session) == 0:
+    if 'userid' in session:
+        # return render_template('index.html', userid = None)
+        return render_template('index.html', userid = session['userid'])
     else:
+        return render_template('index.html')
         # print(session['userid'])
-        if session['userid']:
-            return render_template('index.html', userid = session['userid'])
-        else:
-            return render_template('index.html', userid = None)
+        # if session['userid']:
+        #     return render_template('index.html', userid = session['userid'])
+        # else:
+        #     return render_template('index.html', userid = None)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -67,7 +70,7 @@ def register():
             return '''
                 <script>
                     // 경고창 
-                    alert("중복된 ID 혹은 이름이 있습니다.")
+                    alert("중복된 ID가 있습니다.")
                     // 이전페이지로 이동
                     history.back()
                 </script>
@@ -83,8 +86,8 @@ def login():
         
         row = selectUsers(uid, upw)
         
-        print("uid: %s" % uid)
-        print("upw: %s" % upw)
+        # print("uid: %s" % uid)
+        # print("upw: %s" % upw)
         
         if row: # 회원이면
             # 세션 설정
@@ -113,7 +116,7 @@ def logout():
 
 @app.route('/myfarm')
 def myfarm():
-    return render_template('myfarm.html')
+    return render_template('myfarm.html', userid = session['userid'])
 
 @app.route('/myfarm/temp')
 def checkTemp():
@@ -190,7 +193,7 @@ def upload_file():
         # file.save(os.path.join("static/images", filename))
 
         # Load the saved model
-        model = keras.models.load_model('model/model_epoch10_dropout0.2.h5')
+        model = keras.models.load_model('model/model_epoch7_dropout0.2.h5')
         # model = keras.models.load_model('G:/내 드라이브/TUKorea/캡스톤디자인/model/model.h5')
 
         # Load an image file to classify
@@ -216,7 +219,8 @@ def upload_file():
         disease_class = disease_list[predicted_class]
         # return redirect(url_for('upload_success', filename = filename, disease_class = disease_class))
         # print(len(session)) # 0
-        return render_template('success.html', filename = filename, disease_class = disease_class)
+        return render_template('success.html',
+                               filename = filename, disease_class = disease_class, userid = session['userid'])
     return '''
                 <script>
                     // 경고창 

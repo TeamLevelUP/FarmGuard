@@ -20,45 +20,45 @@
         color: white;
         margin:
           0;
-  }
-  .header a {
-    color: white;
-    text-decoration: none;
-    margin-left: 10px;
-  }
-  .container {
-    display: flex;
-    /*flex-direction: row;*/
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 80px);
-  }
-  .container .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .container img {
-    max-width: 50%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-  .container .buttons {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  .container .buttons button {
-    margin-bottom: 20px;
-  }
+      }
+      .header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 10px;
+      }
+      .container {
+        display: flex;
+        /*flex-direction: row;*/
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 80px);
+      }
+      .container .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .container img {
+        max-width: 50%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+      .container .buttons {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      .container .buttons button {
+        margin-bottom: 20px;
+      }
   </style>
 
   </head>
@@ -66,13 +66,13 @@
     <div class="header">
       <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
       <div>
-        {% if userid == None %}
-        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
-        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
-        {% else %}
-        <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
-        <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
-        {% endif %}
+          {% if userid %}
+          <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
+          <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+          {% else %}
+          <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
+          <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
+          {% endif %}
         <!--<button class="btn btn-primary">Button 4</button>-->
       </div>
     </div>
