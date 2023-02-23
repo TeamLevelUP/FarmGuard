@@ -15,6 +15,7 @@ app.secret_key = 'sa!$@21d!@3qoiop][sa'
 
 @app.route('/')
 def index():
+    # session.pop('userid', None)
     # if len(session) == 0:
     if 'userid' in session:
         # return render_template('index.html', userid = None)
@@ -219,8 +220,13 @@ def upload_file():
         disease_class = disease_list[predicted_class]
         # return redirect(url_for('upload_success', filename = filename, disease_class = disease_class))
         # print(len(session)) # 0
-        return render_template('success.html',
+        if 'userid' in session:
+            return render_template('success.html',
                                filename = filename, disease_class = disease_class, userid = session['userid'])
+        else:
+            return render_template('success.html',
+                                   filename=filename, disease_class=disease_class)
+
     return '''
                 <script>
                     // 경고창 
