@@ -6,8 +6,8 @@ from tensorflow.keras.preprocessing import image
 # return whether or not the disease as a str
 def findDisease(filename):
     # Load the saved model
-    # model = keras.models.load_model('model.h5')
-    model = keras.models.load_model('G:/내 드라이브/TUKorea/캡스톤디자인/model/model.h5')
+    model = keras.models.load_model('model.h5')
+    # model = keras.models.load_model('G:/내 드라이브/TUKorea/캡스톤디자인/model/model.h5')
 
     # Load an image file to classify
     # img = image.load_img('input_image/common2.jpg', target_size=(224, 224)) # 정상
@@ -29,4 +29,4 @@ def findDisease(filename):
     return disease[predicted_class]
     
 if __name__ == '__main__':
-    pass
+    findDisease("common.jpg")

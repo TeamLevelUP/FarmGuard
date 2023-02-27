@@ -90,6 +90,13 @@ print('Test accuracy:', test_acc)
 # Save the model to a file
 model.save('model.h5')
 
+
+# Convert lite file - 필요한지 아직 모름
+# converter = tf.lite.TFLiteConverter.from_keras_model(model)
+# tflite_model = converter.convert()
+# with open("model.tflite", "wb") as f:
+#     f.write(tflite_model)
+
 # Check the time
 print("time to find image: %d min %d sec" % (time_to_find_image / 60, time_to_find_image % 60))
 print("time to train model: %d min %d sec" % (time_to_train_model / 60, time_to_train_model % 60))
