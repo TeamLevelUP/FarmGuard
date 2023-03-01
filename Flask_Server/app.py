@@ -3,6 +3,8 @@ from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import os, logging
 from dao import selectUsers, appendUsers
+import xml.etree.ElementTree as elemTree
+
 # AI
 import tensorflow as tf
 import numpy as np
@@ -10,7 +12,10 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 
 app = Flask(__name__)
-app.secret_key = 'sa!$@21d!@3qoiop][sa'
+#Parse XML
+tree = elemTree.parse('keys.xml')
+app.secret_key = tree.find('string[@name="secret_key"]').text
+# app.secret_key = 'sa!$@21d!@3qoiop][sa' now changed
 
 
 @app.route('/')
