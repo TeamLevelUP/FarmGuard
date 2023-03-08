@@ -79,12 +79,7 @@ fabric.properties
 # 사진 및 모델
 Plant_Disease_Classifier/data/
 *.h5
-<<<<<<< HEAD
 *.weights
 
 #Auth Keys
 keys.xml
-=======
-keys.xml
-*.weights
->>>>>>> main
