@@ -1,10 +1,14 @@
 import pymysql as my
+import xml.etree.ElementTree as elemTree
 
+#Parse XML
+tree = elemTree.parse('keys.xml')
 conn = None
+
 try:
     conn = my.connect(      host        ='localhost',       # 로컬 주소
                             user        ='root',    
-                            password    ='password',
+                            password    =tree.find('string[@name="SQL_PASS"]').text,
                             database    ='user',        # DB 스키마 이름
                             cursorclass = my.cursors.DictCursor # 명령어 입력을 위한 커서
                             )

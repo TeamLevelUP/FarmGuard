@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import os
+import json
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 from sklearn.model_selection import train_test_split
@@ -11,9 +12,26 @@ import time
 # 학습데이터: 정상 10,765장 / 질병 3,167장
 # data_path = 'data'
 data_path = 'G:/내 드라이브/TUKorea/캡스톤디자인/data/1.Training/원천데이터/05.상추'
+label_path = 'G:/내 드라이브/TUKorea/캡스톤디자인/data/1.Training/라벨링데이터/05.상추'
+images, tags, labels = [], [], []
 
-# Load the images and labels
-x, y = [], []
+# 라벨 불러오기
+folder_num = 1
+start = time.time() # 라벨 불러오는 시간 측정
+for class_folder in os.listdir(label_path):
+    class_path = os.path.join(label_path, class_folder)
+    label_num = 1
+    for label_file in os.listdir(class_path):
+        print("Find label now...    folder %d / %d  image %d / %d" %
+              (folder_num, len(os.listdir(label_path)), label_num, len(os.listdir(class_path))))
+        with open(label_path + "/" + label_file, 'r') as f:
+            json_data = json.load(f)
+        print("here is:\n" + json.dumps(json_data))
+        label_num += 1
+    folder_num += 1
+time_to_find_label = time.time() - start
+
+# Load the images
 folder_num = 1
 start = time.time() # 이미지 불러오는 시간 측정
 for class_folder in os.listdir(data_path):
@@ -23,11 +41,13 @@ for class_folder in os.listdir(data_path):
         print("Find image now...    folder %d / %d  image %d / %d" %
               (folder_num, len(os.listdir(data_path)), image_num, len(os.listdir(class_path))))
         img = image.load_img(os.path.join(class_path, image_file), target_size=(224, 224))
-        x.append(np.array(img))
-        y.append(int(class_folder))
+        images.append(np.array(img))
+        tags.append(int(class_folder))
         image_num += 1
     folder_num += 1
 time_to_find_image = time.time() - start
+
+
 # print("time to find image: %d sec" % (time.time() - start))
 
 # 학습자료 시각화
@@ -41,11 +61,11 @@ time_to_find_image = time.time() - start
 # plt.show()
 
 # Convert the data to numpy arrays
-x = np.array(x)
-y = np.array(y)
+images = np.array(images)
+tags = np.array(tags)
 
 # Split the data into training and testing sets
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 42)
+x_train, x_test, y_train, y_test = train_test_split(images, tags, test_size = 0.2, random_state = 42)
 
 # Preprocess the data
 x_train = x_train.astype('float32') / 255.0
@@ -89,6 +109,13 @@ print('Test accuracy:', test_acc)
 
 # Save the model to a file
 model.save('model.h5')
+
+
+# Convert lite file - 필요한지 아직 모름
+# converter = tf.lite.TFLiteConverter.from_keras_model(model)
+# tflite_model = converter.convert()
+# with open("model.tflite", "wb") as f:
+#     f.write(tflite_model)
 
 # Check the time
 print("time to find image: %d min %d sec" % (time_to_find_image / 60, time_to_find_image % 60))
