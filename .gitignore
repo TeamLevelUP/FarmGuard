@@ -81,5 +81,8 @@ Plant_Disease_Classifier/data/
 *.h5
 *.weights
 
+# 설정파일
+.idea/*.iml
+
 #Auth Keys
 keys.xml
