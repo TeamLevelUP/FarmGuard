@@ -20,13 +20,18 @@ folder_num = 1
 start = time.time() # 라벨 불러오는 시간 측정
 for class_folder in os.listdir(label_path):
     class_path = os.path.join(label_path, class_folder)
+    # print(class_path) # G:/내 드라이브/TUKorea/캡스톤디자인/data/1.Training/라벨링데이터/05.상추\0
     label_num = 1
     for label_file in os.listdir(class_path):
         print("Find label now...    folder %d / %d  image %d / %d" %
               (folder_num, len(os.listdir(label_path)), label_num, len(os.listdir(class_path))))
-        with open(label_path + "/" + label_file, 'r') as f:
+        with open(class_path + "/" + label_file, 'r') as f:
             json_data = json.load(f)
-        print("here is:\n" + json.dumps(json_data))
+        # print("here is:\n" + json.dumps(json_data))
+        print("disease")
+        print(json_data["annotations"]["disease"])
+        print("rounding box points")
+        print(json_data["annotations"]["points"])
         label_num += 1
     folder_num += 1
 time_to_find_label = time.time() - start
@@ -120,7 +125,7 @@ model.save('model.h5')
 # Check the time
 print("time to find image: %d min %d sec" % (time_to_find_image / 60, time_to_find_image % 60))
 print("time to train model: %d min %d sec" % (time_to_train_model / 60, time_to_train_model % 60))
-
+print("time to train label: %d min %d sec" % (time_to_find_label / 60, time_to_find_label % 60))
 
 # Plot the training and validation accuracy
 plt.subplot(1, 2, 1)
