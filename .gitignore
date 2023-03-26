@@ -78,11 +78,13 @@ fabric.properties
 
 # 사진 및 모델
 Plant_Disease_Classifier/data/
+Image_Detection_YOLO/data/2.Validation/원천데이터/05.상추/
 *.h5
 *.weights
 
 # 설정파일
 .idea/*.iml
+venv/
 
 #Auth Keys
 keys.xml
