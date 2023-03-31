@@ -77,11 +77,17 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# 사진 및 모델
-Plant_Disease_Classifier/data/
-Image_Detection_YOLO/data/2.Validation/원천데이터/05.상추/
+# 사진
+# Plant_Disease_Classifier/data/
+# Image_Detection_YOLO/data/2.Validation/원천데이터/05.상추/
+*.jpg
+*.jpeg
+
+# 모델 및 가중치
 *.h5
 *.weights
+Image_Detection_YOLO/yolov5-master/runs
+*.pt
 
 # 설정파일
 .idea/*.iml

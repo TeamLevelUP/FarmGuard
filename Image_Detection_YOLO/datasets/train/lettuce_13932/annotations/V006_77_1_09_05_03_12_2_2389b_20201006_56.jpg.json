@@ -1,0 +1,27 @@
+{
+    "description": {
+        "image": "V006_77_1_09_05_03_12_2_2389b_20201006_56.jpg",
+        "date": "2020/10/06",
+        "worker": "",
+        "height": 1349,
+        "width": 1799,
+        "task": 77,
+        "type": 1,
+        "region": 18
+    },
+    "annotations": {
+        "disease": 10,
+        "crop": 5,
+        "area": 3,
+        "grow": 12,
+        "risk": 2,
+        "points": [
+            {
+                "xtl": 468,
+                "ytl": 141,
+                "xbr": 821,
+                "ybr": 745
+            }
+        ]
+    }
+}
