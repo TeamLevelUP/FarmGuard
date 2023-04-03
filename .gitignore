@@ -90,7 +90,7 @@ Image_Detection_YOLO/yolov5-master/runs
 *.pt
 
 # 설정파일
-.idea/*.iml
+*.idea
 venv/
 
 #Auth Keys
