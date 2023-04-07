@@ -146,6 +146,7 @@ def checkTemp():
     return render_template('temp.html', userid = session['userid'], **locals())
 
 
+
 @app.route('/myfarm/hum')
 def checkHum():
     hums = [{'time': '1', 'data': 40},
