@@ -27,6 +27,8 @@ Usage - formats:
                                  yolov5s_edgetpu.tflite     # TensorFlow Edge TPU
                                  yolov5s_paddle_model       # PaddlePaddle
 """
+# cmd 명령어
+# python detect.py --weights runs/train/yolo5s/train_13932_val_200/weights/best.pt --img 640 --conf 0.25 --source data/images
 
 import argparse
 import os
@@ -114,6 +116,8 @@ def run(
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
+    # 하나라도 감지하면 카운트
+    det_count = 0
     for path, im, im0s, vid_cap, s in dataset:
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
@@ -133,6 +137,9 @@ def run(
 
         # Second-stage classifier (optional)
         # pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
+
+        # if not detect, count this
+        # no_det_count = 0
 
         # Process predictions
         for i, det in enumerate(pred):  # per image
@@ -187,7 +194,12 @@ def run(
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
-                    cv2.imwrite(save_path, im0)
+                    # detect가 하나라도 됐으면 그대로 저장
+                    if len(det):
+                        cv2.imwrite(save_path, im0)
+                    # detect된게 없다면 이름을 바꿔서 저장
+                    else:
+                        cv2.imwrite(save_path.replace(".jpg", "_nodetect.jpg"), im0)
                 else:  # 'video' or 'stream'
                     if vid_path[i] != save_path:  # new video
                         vid_path[i] = save_path
@@ -205,6 +217,9 @@ def run(
 
         # Print time (inference-only)
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
+        # if len(det):
+        #     det_count = 1
+    # print("det count: ", det_count)
 
     # Print results
     t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image

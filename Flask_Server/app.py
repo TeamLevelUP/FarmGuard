@@ -193,6 +193,8 @@ def checkIlum():
 def upload_file():
     file = request.files['image']
     if file:
+        print(secure_filename(file.filename))
+
         # Save the img file
         filename = secure_filename(file.filename)
         file.save(os.path.join("static/images", "input_image.jpg"))
