@@ -6,11 +6,13 @@ from tensorflow.keras.preprocessing import image
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import time
+import json
 
 # Define the data path
 # 학습데이터: 정상 10,765장 / 질병 3,167장
 # data_path = 'data'
 data_path = 'G:/내 드라이브/TUKorea/캡스톤디자인/data/1.Training/원천데이터/05.상추'
+# data_path = 'G:/내 드라이브/TUKorea/캡스톤디자인/data/2.Validation/원천데이터/05.상추'
 images, tags = [], []
 
 
@@ -25,7 +27,27 @@ for class_folder in os.listdir(data_path):
               (folder_num, len(os.listdir(data_path)), image_num, len(os.listdir(class_path))))
         img = image.load_img(os.path.join(class_path, image_file), target_size=(224, 224))
         images.append(np.array(img))
-        tags.append(int(class_folder))
+
+        label_path = class_path.replace("원천", "라벨링")
+        label_file = image_file.replace("jpg", "jpg.json").replace("jpeg", "jpeg.json").replace("JPG", "JPG.json").replace("JPEG", "JPEG.json")
+        label_file_path = label_path + "/" + label_file
+        label_file_path = label_file_path.replace("\\", "/")
+        # print(label_file_path)
+        with open(label_file_path, 'r') as f_json:
+            json_data = json.load(f_json)
+        # 0:normal 9:sclerotiniarot(균핵병) 10:downymildew(노균병)
+        class_of_disease = json_data["annotations"]["disease"]
+        # 정해진 3개이외의 질병이 나오면 추가하지 않음
+        if class_of_disease not in(0, 9, 10):
+            # class_of_disease = 9
+            images.pop()
+            continue
+        elif class_of_disease == 9:
+            class_of_disease = 1
+        elif class_of_disease == 10:
+            class_of_disease = 2
+        # print(class_of_disease)
+        tags.append(class_of_disease)
         image_num += 1
     folder_num += 1
 time_to_find_image = time.time() - start
@@ -56,8 +78,8 @@ x_test = x_test.astype('float32') / 255.0
 
 # Convert class vectors to binary class matrices
 # One-Hot Encoding ex) 5 = [0, 0, 0, 0, 0, 1]
-y_train = keras.utils.to_categorical(y_train, 2)
-y_test = keras.utils.to_categorical(y_test, 2)
+y_train = keras.utils.to_categorical(y_train, 3)
+y_test = keras.utils.to_categorical(y_test, 3)
 
 start = time.time() # 모델 훈련하는 시간 측정
 # Build the model
@@ -74,8 +96,8 @@ model.add(keras.layers.Flatten())
 model.add(keras.layers.Dense(64, activation = 'relu'))
 # 출력 뉴런의 일부만 사용 - 과적합 방지를 위함
 model.add(keras.layers.Dropout(0.2))
-# 출력 뉴런의 수 = 2, 'softmax': 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
-model.add(keras.layers.Dense(2, activation = 'softmax'))
+# 출력 뉴런의 수 = 3, 'softmax': 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
+model.add(keras.layers.Dense(3, activation = 'softmax'))
 # model.add(keras.layers.Dense(2, activation = 'sigmoid'))
 
 # Compile the model
@@ -92,13 +114,6 @@ print('Test accuracy:', test_acc)
 
 # Save the model to a file
 model.save('model.h5')
-
-
-# Convert lite file - 필요한지 아직 모름
-# converter = tf.lite.TFLiteConverter.from_keras_model(model)
-# tflite_model = converter.convert()
-# with open("model.tflite", "wb") as f:
-#     f.write(tflite_model)
 
 # Check the time
 print("time to find image: %d min %d sec" % (time_to_find_image / 60, time_to_find_image % 60))

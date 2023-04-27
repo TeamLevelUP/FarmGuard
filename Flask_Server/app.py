@@ -10,13 +10,14 @@ import tensorflow as tf
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
+import sys
+# sys.path.append("/yolov5-master")
+from yolov5 import detect
 
 app = Flask(__name__)
 #Parse XML
 tree = elemTree.parse('keys.xml')
 app.secret_key = tree.find('string[@name="secret_key"]').text
-# app.secret_key = 'sa!$@21d!@3qoiop][sa' now changed
-
 
 @app.route('/')
 def index():
@@ -193,16 +194,44 @@ def checkIlum():
 def upload_file():
     file = request.files['image']
     if file:
-        print(secure_filename(file.filename))
+        # print(secure_filename(file.filename))
 
         # Save the img file
         filename = secure_filename(file.filename)
         file.save(os.path.join("static/images", "input_image.jpg"))
         # file.save(os.path.join("static/images", filename))
+        os.system("cp static/images/input_image.jpg yolov5/data/images/input_image.jpg")
+
+        # 기존에 사용한 폴더 지우기
+        # print(os.getcwd()) # C:\FarmGuard\Flask_Server
+        # os.system("cd yolov5/runs/detect")
+        if os.path.isdir('yolov5/runs/detect/exp'):
+            for file in os.listdir("yolov5/runs/detect/exp"):
+                os.remove('yolov5/runs/detect/exp/' + file)
+            os.rmdir('yolov5/runs/detect/exp')
+
+        # 감지 여부 확인 - 감지 했으면 True 못했으면 False
+        opt = detect.parse_opt()
+        # detect.main: image detection and save file, return 검출 여부
+        is_detected = detect.main(opt)
+        # print(is_detected)
+        
+        # 이미지에서 상추 검출 안됐을시 리턴
+        if not is_detected:
+            return '''
+                        <script>
+                            // 경고창 
+                            alert("상추 검출 실패, 다른 이미지로 다시 시도하세요")
+                            // 이전페이지로 이동
+                            history.back()
+                        </script>
+            '''
+
+        # 이미지에서 상추 검출시 질병 예측 시작
 
         # Load the saved model
-        model = keras.models.load_model('model/model_epoch7_dropout0.2.h5')
-        # model = keras.models.load_model('G:/내 드라이브/TUKorea/캡스톤디자인/model/model.h5')
+        # model = keras.models.load_model('model/model_epoch7_dropout0.2.h5')
+        model = keras.models.load_model('model/model_epoch7_dropout0.2_small.h5')
 
         # Load an image file to classify
         # img = image.load_img('input_image/common2.jpg', target_size=(224, 224)) # 정상
@@ -221,12 +250,18 @@ def upload_file():
         predicted_class = np.argmax(prediction[0])
 
         # predict result
-        disease_list = ['normal', 'disease']
+        # disease_list = ['normal', 'disease']
+        # sclerotiniarot(균핵병) downymildew(노균병)
+        disease_list = {0:'normal', 1:'sclerotiniarot', 2:'downymildew'}
         # print("Prediction: ", prediction)
         # print("Predicted class:", predicted_class)
-        disease_class = disease_list[predicted_class]
+        disease_class = disease_list[int(predicted_class)]
         # return redirect(url_for('upload_success', filename = filename, disease_class = disease_class))
         # print(len(session)) # 0
+        
+        # 화면에 Bounding Box를 포함한 이미지 출력을 위해 복사
+        os.system("cp yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
+
         if 'userid' in session:
             return render_template('success.html',
                                filename = filename, disease_class = disease_class, userid = session['userid'])
