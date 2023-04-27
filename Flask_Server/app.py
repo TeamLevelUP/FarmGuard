@@ -230,8 +230,8 @@ def upload_file():
         # 이미지에서 상추 검출시 질병 예측 시작
 
         # Load the saved model
-        # model = keras.models.load_model('model/model_epoch7_dropout0.2.h5')
-        model = keras.models.load_model('model/model_epoch7_dropout0.2_small.h5')
+        # model = keras.models.load_model('model/model_class2_epoch7_dropout0.2.h5')
+        model = keras.models.load_model('model/model_class3_epoch10_dropout0.2.h5')
 
         # Load an image file to classify
         # img = image.load_img('input_image/common2.jpg', target_size=(224, 224)) # 정상
