@@ -1,18 +1,25 @@
+<!-- 메인 홈페이지 -->
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Flask Page</title>
+	  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
+
+
       .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
         height: 80px;
-        background-color: #24292e;
+        background-color: #464D5C;
         padding: 0 20px;
       }
       .header h2 {
@@ -34,15 +41,15 @@
       .container .content {
         color: black;
         display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        position: relative;
+<!--        flex-direction: column;-->
+<!--        flex-wrap: wrap;-->
+<!--        align-items: center;-->
+<!--        justify-content: center;-->
+<!--        position: relative;-->
       }
       .container img {
         max-width: 50%;
-        max-height: 100%;
+        max-height: 50%;
         object-fit: contain;
       }
       .container .buttons {
@@ -75,13 +82,13 @@
 		text-decoration: none;
 		color:#333;
 	}
-/* 글자크기를 16px 맑은 고딕 굵게하고 width넓이 700, 높이 50만큼 배경색은 #ccc, 글자색은 검정색, 라인높이50px
+/* 글자크기를 16px 맑은 고딕 굵게하고 width넓이 700, 높이 50만큼 배경색은 #원래#24292e, 글자색은 검정색, 라인높이50px
 menu박스 가운데정렬, 글자가운데 정렬 */
 	#menu {
 		font:bold 16px "malgun gothic";
 		width:700px;
 		height:50px;
-		background: #24292e;
+		background: #464D5C;
 		color:black;
 		line-height: 50px;
 		margin:0 auto;
@@ -100,7 +107,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 		display:none;
 		position: absolute;
 		font-size:14px;
-		background: skyblue;
+		background: #83AFA6;
 	}
 
 	#menu > ul > li:hover > ul {
@@ -108,9 +115,34 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 	}
 
 	#menu > ul > li > ul > li:hover {
-		background: orange;
+		background: #D3A284;
 		transition: ease 1s;
 		}
+
+	.container ul li::before {
+  content: "◆ ";
+  margin-right: 5px;
+  color: navy;
+  font-size:14px;
+}
+
+ ul, ol{
+ font-size:30px;
+ font-weight:bold;
+ }
+
+body{
+background-color: #E5E5E5;
+}
+
+.container .box{
+font-family: 'Dongle', sans-serif;
+font-size:50px;
+background-color: #B3A78C;
+margin:0 auto;
+		text-align: center;
+}
+
 	</style>
 
   </head>
@@ -170,9 +202,15 @@ menu박스 가운데정렬, 글자가운데 정렬 */
       </div>
 
     </div>
-    <div class="container">
+
+
+
+	{% if userid %}
+	 <div class="container">
       <div class="content">
-        <img src="static/images/lecttuce.jpg" alt="lecttuce" style="z-index:-1">
+        <img src="static/images/tino_.png" alt="logo" style="z-index:-1">
+
+
         <h2>Image Upload</h2>
       <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
         <div class="form-group">
@@ -182,5 +220,38 @@ menu박스 가운데정렬, 글자가운데 정렬 */
       </form>
       </div>
     </div>
+
+  {% else %}
+	 <div class="container">
+      <div class="content">
+        <img src="static/images/tino_.png" alt="logo" style="z-index:-1">
+
+
+<!--        <h2>Image Upload</h2>-->
+<!--      <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">-->
+<!--        <div class="form-group">-->
+<!--          <input type="file" name="image">-->
+<!--          <button type="submit" class="btn btn-primary">Upload</button>-->
+<!--        </div>-->
+<!--      </form>-->
+      </div>
+
+		<div class="container">
+  <div class="box">
+    <p>
+	  <h1>안녕하세요!</h1><br>
+	  <h1>Farmguard는 다음과 같은 기능을 제공합니다.</h1><br>
+      <ul>
+        <li> 농장 정보 조회</li>
+        <li> 농장 제어 </li>
+        <li> 병해충 판단 </li>
+      </ul><br>
+      <h1>기능을 사용하시려면, 로그인을 해주세요!</h1>
+    </p>
+  </div>
+</div>
+    </div>
+  {% endif %}
+
   </body>
 </html>

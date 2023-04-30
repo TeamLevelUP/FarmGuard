@@ -120,6 +120,11 @@ def logout():
     # print(len(session)) # 0
     return redirect('/')
 
+@app.route('/test')
+def test():
+    return render_template('test.html', userid = session['userid'])
+
+
 @app.route('/myfarm')
 def myfarm():
     return render_template('myfarm.html', userid = session['userid'])
