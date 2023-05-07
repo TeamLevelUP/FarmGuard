@@ -2,8 +2,8 @@ import os
 import json
 import time
 
-label_path = 'datasets/train/lettuce_13932/annotations'
-# label_path = 'datasets/val/annotations'
+# label_path = 'datasets/train/lettuce_13932/annotations'
+label_path = 'datasets/val/annotations'
 # images, tags, labels = [], [], []
 
 # Define the classes
@@ -63,7 +63,7 @@ for label_file in os.listdir(label_path):
 
     # annotation 입력
     with open(label_path.replace("annotations", "labels") + "/" +
-              label_file.replace("jpg.json", "txt"), 'w') as f_annotation:
+              label_file.replace("jpg.json", "txt").replace("jpeg.json", "txt").replace("JPG.json", "txt").replace("JPEG.json", "txt"), 'w') as f_annotation:
         f_annotation.write(annotation_line)
     label_num += 1
 

@@ -1,0 +1,5 @@
+# 이미지 학습
+# yolov5(n, s, m, l, x).pt --workers: 사용할 쓰레드 수(집 PC:2)
+# python train.py --img 640 --epochs 3 --data coco128.yaml --weights yolov5x.pt --workers 2
+# 이미지 detect
+# python detect.py --weights runs/train/yolo5s/train_13932_val_200/weights/best.pt --img 640 --conf 0.25 --source data/images
