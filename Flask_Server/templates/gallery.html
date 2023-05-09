@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+    </head>
+    <body>
+        <img src="static/images/gallery1.jpg" alt="gallery1" style="width:300px; height:300px;">
+        <img src="static/images/gallery2.jpg" alt="gallery2" style="width:300px; height:300px;">
+        <img src="static/images/gallery3.jpg" alt="gallery3" style="width:300px; height:300px;">
+        <img src="static/images/gallery4.jpg" alt="gallery4" style="width:300px; height:300px;">
+        <img src="static/images/gallery5.jpg" alt="gallery5" style="width:300px; height:300px;">
+
+            <form action="{{ url_for('upload_file') }}" method="post">
+            <div class="form-group">
+                <button type="submit" name="gallery" value="gallery1.jpg" class="btn btn-primary">image1 Upload</button>
+            </div>
+        </form>
+        <form action="{{ url_for('upload_file') }}" method="post">
+            <div class="form-group">
+                <button type="submit" name="gallery" value="gallery2.jpg" class="btn btn-primary">image2 Upload</button>
+            </div>
+        </form>
+        <form action="{{ url_for('upload_file') }}" method="post">
+            <div class="form-group">
+                <button type="submit" name="gallery" value="gallery3.jpg" class="btn btn-primary">image3 Upload</button>
+            </div>
+        </form>
+        <form action="{{ url_for('upload_file') }}" method="post">
+            <div class="form-group">
+                <button type="submit" name="gallery" value="gallery4.jpg" class="btn btn-primary">image4 Upload</button>
+            </div>
+        </form>
+        <form action="{{ url_for('upload_file') }}" method="post">
+            <div class="form-group">
+                <button type="submit" name="gallery" value="gallery5.jpg" class="btn btn-primary">image5 Upload</button>
+            </div>
+        </form>
+    </body>
+</html>
