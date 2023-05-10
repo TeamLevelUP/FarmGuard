@@ -60,7 +60,7 @@ def on_message(client, userdata, msg):
             os.system("cp output.png C:/FarmGuard/Flask_Server/static/images/gallery5.jpg")
         # db에 추가
         # appendSensorVal(temp, hum, ilum)
-    time.sleep(1)
+    # time.sleep(5)
 
 client = mqtt.Client()
 client.on_connect = on_connect

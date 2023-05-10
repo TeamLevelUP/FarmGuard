@@ -139,9 +139,13 @@ def appendTempVal(temp):
             UPDATE tempVal SET temp = %s WHERE id = %s;
             '''
             # cursor.execute(sql, (temp_back, hum_back, ilum_back, i))
+            # print("row_back['temp']")
+            # print(row_back['temp'])
+            # print("i")
+            # print(i)
             cursor.execute(sql, (row_back['temp'], i))
         sql = '''
-            UPDATE sensorval SET temp = %s WHERE id = %s;
+            UPDATE tempVal SET temp = %s WHERE id = %s;
              '''
         cursor.execute(sql, (temp, id - 1))
 
@@ -185,7 +189,7 @@ def appendHumVal(hum):
             # cursor.execute(sql, (temp_back, hum_back, ilum_back, i))
             cursor.execute(sql, (row_back['hum'], i))
         sql = '''
-            UPDATE sensorval SET hum = %s WHERE id = %s;
+            UPDATE humVal SET hum = %s WHERE id = %s;
              '''
         cursor.execute(sql, (hum, id - 1))
 
@@ -221,7 +225,6 @@ def appendIlumVal(ilum):
             # print(temp_back, hum_back, ilum_back)
             row_back = cursor.fetchone()
             # print(row_back)
-            print(row_back)
 
             sql = '''
             UPDATE ilumVal SET ilum = %s WHERE id = %s;
@@ -229,7 +232,7 @@ def appendIlumVal(ilum):
             # cursor.execute(sql, (temp_back, hum_back, ilum_back, i))
             cursor.execute(sql, (row_back['ilum'], i))
         sql = '''
-            UPDATE sensorval SET ilum = %s WHERE id = %s;
+            UPDATE ilumVal SET ilum = %s WHERE id = %s;
              '''
         cursor.execute(sql, (ilum, id - 1))
 

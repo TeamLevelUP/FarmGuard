@@ -17,6 +17,9 @@ app = Flask(__name__)
 tree = elemTree.parse('keys.xml')
 app.secret_key = tree.find('string[@name="secret_key"]').text
 
+# @app.route('/')
+# def before_
+
 @app.route('/')
 def index():
     # session.pop('userid', None)
@@ -254,6 +257,13 @@ def checkIlum():
     sensorVal4 = getIlumVal(4)
     sensorVal5 = getIlumVal(5)
     sensorVal6 = getIlumVal(6)
+
+    # print(sensorVal1)
+    print(sensorVal2)
+    print(sensorVal3)
+    print(sensorVal4)
+    print(sensorVal5)
+    print(sensorVal6)
 
     # ilums = [{'time': '1', 'data': 4783},
     #          {'time': '2', 'data': 4889},
