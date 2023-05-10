@@ -18,7 +18,7 @@
         justify-content: space-between;
         width: 100%;
         height: 80px;
-        background-color: #24292e;
+        background-color: #464D5C;
         padding: 0 20px;
       }
       .header h2 {
@@ -53,12 +53,15 @@
       }
 
       .img2 {
-      max-width: 80%;
-      max-height: 80%;
-      object-fit: cover;
-      background-repeat: no-repeat;
-      background-size: contain;
-}
+        max-width: 50%;
+        max-height: 50%;
+        z-index:-1;
+<!--        height: 20%;-->
+<!--        width: 20%;-->
+<!--        background-image: url('img/signup.jpeg');-->
+<!--        background-repeat : no-repeat;-->
+<!--        background-size : cover;-->
+      }
 
       .container .buttons {
         position: absolute;
@@ -97,7 +100,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 		font:bold 16px "malgun gothic";
 		width:700px;
 		height:50px;
-		background: #24292e;
+		background: #464D5C;
 		color:black;
 		line-height: 50px;
 		margin:0 auto;
@@ -142,7 +145,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
  }
 
 body{
-background-color: white;
+background-color: #E5E5E5;
 }
 
 .container .box{
@@ -171,7 +174,7 @@ margin:0 auto;
 		<li><a href="#">내 정보</a>
 			<ul>
 				<li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
-				<li><a href="{{ url_for('gallery') }}">갤러리</a></li>
+				<li><a href="#">갤러리</a></li>
                 <li><a href="#">쪽지함</a></li>
 			</ul>
 		</li>
@@ -218,13 +221,14 @@ margin:0 auto;
 <!--    background: url('Flask_Server/static/images/main.jpg') no-repeat center;-->
 <!--    background-size: cover;-->
       <div class="img2">
-          <img src="static/images/main.jpg" alt="mainImage" style="z-index:-1">
-      </div>
+          <img src="static/images/main.jpg" alt="mainImage">
+
+    </div>
 
   {% else %}
 	 <div class="container">
       <div class="content">
-        <img src="static/images/tino.png" alt="logo" style="z-index:-1">
+        <img src="static/images/tino_.png" alt="logo" style="z-index:-1">
       </div>
 
 		<div class="container">
