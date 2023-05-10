@@ -2,12 +2,20 @@ import paho.mqtt.client as mqtt
 import base64
 import os
 import time
+# import sys
+# sys.path.append("C:/FarmGuard/Flask_Server")
+# sys.path.append("C:/FarmGuard")
+# sys.path.append("C:/FarmGuard/IoT_Controller")
+# from ...Flask_Server.dao import appendSensorVal
+from dao import appendSensorVal, appendTempVal, appendHumVal, appendIlumVal
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe("#")
 
 def on_message(client, userdata, msg):
+    # temp = 0; hum = 0; ilum = 0
+    # global temp; global hum; global ilum;
     #수신 받은 mqtt 메시지 내용을 str로 변환
 
     # message의 topic을 비교하여 저장하기
@@ -15,12 +23,18 @@ def on_message(client, userdata, msg):
     if msg.topic == "temp":
         temp = str(msg.payload.decode("utf-8"))
         print(msg.topic, temp)
+        temp = int(temp)
+        appendTempVal(temp)
     elif msg.topic == "hum":
-        temp = str(msg.payload.decode("utf-8"))
-        print(msg.topic, temp)
+        hum = str(msg.payload.decode("utf-8"))
+        print(msg.topic, hum)
+        hum = int(hum)
+        appendHumVal(hum)
     elif msg.topic == "ilum":
-        temp = str(msg.payload.decode("utf-8"))
-        print(msg.topic, temp)
+        ilum = str(msg.payload.decode("utf-8"))
+        print(msg.topic, ilum)
+        ilum = int(ilum)
+        appendIlumVal(ilum)
     elif msg.topic == "test":
         with open("output.bin", "wb") as file:
             print(type(msg.payload))
@@ -44,9 +58,9 @@ def on_message(client, userdata, msg):
                 os.system("cp %sgallery%d.jpg %sgallery%d.jpg" % (gallery_path, i+1, gallery_path, i))
             # os.system("cd C:/FarmGuard/IoT_Controller/RPI")
             os.system("cp output.png C:/FarmGuard/Flask_Server/static/images/gallery5.jpg")
-    
-    
-    # time.sleep(5)
+        # db에 추가
+        # appendSensorVal(temp, hum, ilum)
+    time.sleep(1)
 
 client = mqtt.Client()
 client.on_connect = on_connect

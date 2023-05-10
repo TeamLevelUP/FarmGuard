@@ -2,7 +2,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import os, logging
-from dao import selectUsers, appendUsers
+from dao import selectUsers, appendUsers, getSensorVal, getTempVal, getHumVal, getIlumVal
 import xml.etree.ElementTree as elemTree
 
 # AI
@@ -10,8 +10,6 @@ import tensorflow as tf
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
-import sys
-# sys.path.append("/yolov5-master")
 from yolov5 import detect
 
 app = Flask(__name__)
@@ -130,6 +128,7 @@ def error():
 
 @app.route('/myPage')
 def myPage():
+    # appendSensorVal(11,12,13)
     return render_template('myPage.html', userid = session['userid'], username = session['username'])
 
 
@@ -143,12 +142,44 @@ def disease():
 
 @app.route('/myfarm/temp')
 def checkTemp():
-    temps = [{'time': '1', 'data': 28.5},
-             {'time': '2', 'data': 29.5},
-             {'time': '3', 'data': 22.5},
-             {'time': '4', 'data': 23.5},
-             {'time': '5', 'data': 25.5},
-             {'time': '6', 'data': 27.5},
+    # sensorVal1 = getSensorVal(1)
+    # sensorVal2 = getSensorVal(2)
+    # sensorVal3 = getSensorVal(3)
+    # sensorVal4 = getSensorVal(4)
+    # sensorVal5 = getSensorVal(5)
+    # sensorVal6 = getSensorVal(6)
+
+    sensorVal1 = getTempVal(1)
+    sensorVal2 = getTempVal(2)
+    sensorVal3 = getTempVal(3)
+    sensorVal4 = getTempVal(4)
+    sensorVal5 = getTempVal(5)
+    sensorVal6 = getTempVal(6)
+
+    # for i in range(0,6):
+    #     pass
+
+    # temps = [{'time': '1', 'data': 28.5},
+    #          {'time': '2', 'data': 29.5},
+    #          {'time': '3', 'data': 22.5},
+    #          {'time': '4', 'data': 23.5},
+    #          {'time': '5', 'data': 25.5},
+    #          {'time': '6', 'data': 27.5},
+    #          ]
+
+    # print(sensorVal1)
+    # print(sensorVal2)
+    # print(sensorVal3)
+    # print(sensorVal4)
+    # print(sensorVal5)
+    # print(sensorVal6)
+
+    temps = [{'time': '1', 'data': sensorVal1['temp'] if sensorVal1 is not None else 0},
+             {'time': '2', 'data': sensorVal2['temp'] if sensorVal2 is not None else 0},
+             {'time': '3', 'data': sensorVal3['temp'] if sensorVal3 is not None else 0},
+             {'time': '4', 'data': sensorVal4['temp'] if sensorVal4 is not None else 0},
+             {'time': '5', 'data': sensorVal5['temp'] if sensorVal5 is not None else 0},
+             {'time': '6', 'data': sensorVal6['temp'] if sensorVal6 is not None else 0},
              ]
 
     label = '온도'
@@ -166,13 +197,35 @@ def checkTemp():
 
 @app.route('/myfarm/hum')
 def checkHum():
-    hums = [{'time': '1', 'data': 40},
-            {'time': '2', 'data': 41},
-            {'time': '3', 'data': 40},
-            {'time': '4', 'data': 41},
-            {'time': '5', 'data': 43},
-            {'time': '6', 'data': 43},
-            ]
+    # sensorVal1 = getSensorVal(1)
+    # sensorVal2 = getSensorVal(2)
+    # sensorVal3 = getSensorVal(3)
+    # sensorVal4 = getSensorVal(4)
+    # sensorVal5 = getSensorVal(5)
+    # sensorVal6 = getSensorVal(6)
+
+    sensorVal1 = getHumVal(1)
+    sensorVal2 = getHumVal(2)
+    sensorVal3 = getHumVal(3)
+    sensorVal4 = getHumVal(4)
+    sensorVal5 = getHumVal(5)
+    sensorVal6 = getHumVal(6)
+
+    # hums = [{'time': '1', 'data': 40},
+    #         {'time': '2', 'data': 41},
+    #         {'time': '3', 'data': 40},
+    #         {'time': '4', 'data': 41},
+    #         {'time': '5', 'data': 43},
+    #         {'time': '6', 'data': 43},
+    #         ]
+
+    hums =  [{'time': '1', 'data': sensorVal1['hum'] if sensorVal1 is not None else 0},
+             {'time': '2', 'data': sensorVal2['hum'] if sensorVal2 is not None else 0},
+             {'time': '3', 'data': sensorVal3['hum'] if sensorVal3 is not None else 0},
+             {'time': '4', 'data': sensorVal4['hum'] if sensorVal4 is not None else 0},
+             {'time': '5', 'data': sensorVal5['hum'] if sensorVal5 is not None else 0},
+             {'time': '6', 'data': sensorVal6['hum'] if sensorVal6 is not None else 0},
+             ]
 
     label = '습도'
     xlabels = []
@@ -188,13 +241,35 @@ def checkHum():
 
 @app.route('/myfarm/ilum')
 def checkIlum():
-    ilums = [{'time': '1', 'data': 4783},
-             {'time': '2', 'data': 4889},
-             {'time': '3', 'data': 4932},
-             {'time': '4', 'data': 4959},
-             {'time': '5', 'data': 4999},
-             {'time': '6', 'data': 5003},
-             ]
+    # sensorVal1 = getSensorVal(1)
+    # sensorVal2 = getSensorVal(2)
+    # sensorVal3 = getSensorVal(3)
+    # sensorVal4 = getSensorVal(4)
+    # sensorVal5 = getSensorVal(5)
+    # sensorVal6 = getSensorVal(6)
+
+    sensorVal1 = getIlumVal(1)
+    sensorVal2 = getIlumVal(2)
+    sensorVal3 = getIlumVal(3)
+    sensorVal4 = getIlumVal(4)
+    sensorVal5 = getIlumVal(5)
+    sensorVal6 = getIlumVal(6)
+
+    # ilums = [{'time': '1', 'data': 4783},
+    #          {'time': '2', 'data': 4889},
+    #          {'time': '3', 'data': 4932},
+    #          {'time': '4', 'data': 4959},
+    #          {'time': '5', 'data': 4999},
+    #          {'time': '6', 'data': 5003},
+    #          ]
+
+    ilums = [{'time': '1', 'data': sensorVal1['ilum'] if sensorVal1 is not None else 0},
+           {'time': '2', 'data': sensorVal2['ilum'] if sensorVal2 is not None else 0},
+           {'time': '3', 'data': sensorVal3['ilum'] if sensorVal3 is not None else 0},
+           {'time': '4', 'data': sensorVal4['ilum'] if sensorVal4 is not None else 0},
+           {'time': '5', 'data': sensorVal5['ilum'] if sensorVal5 is not None else 0},
+           {'time': '6', 'data': sensorVal6['ilum'] if sensorVal6 is not None else 0},
+           ]
 
     label = '조도'
     xlabels = []
