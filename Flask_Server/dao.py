@@ -1,8 +1,9 @@
 import pymysql as my
 import xml.etree.ElementTree as elemTree
+import os
 
 # Parse XML
-tree = elemTree.parse('keys.xml')
+tree = elemTree.parse('C:/FarmGuard/Flask_Server/keys.xml')
 conn = None
 
 try:
