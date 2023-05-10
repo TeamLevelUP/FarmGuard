@@ -55,58 +55,56 @@ def appendUsers(uid, upw, uname):
     conn.commit()
 
 
-def appendSensorVal(temp, hum, ilum):
-    MAX_SENSOR_VAL = 6
-    sql = '''
-            SELECT * FROM sensorval;
-            '''
-    cursor.execute(sql)
-    row = cursor.fetchall()
-    # print(len(row))
-    id = len(row) + 1
+# def appendSensorVal(temp, hum, ilum):
+#     MAX_SENSOR_VAL = 6
+#     sql =   '''
+#             SELECT * FROM sensorval;
+#             '''
+#     cursor.execute(sql)
+#     row = cursor.fetchall()
+#     # print(len(row))
+#     id = len(row) + 1
 
-    # 최대값보다 적으면 그냥 삽입
-    if id < MAX_SENSOR_VAL + 1:
-        sql = '''
-        INSERT INTO sensorval VALUES
-        (%s, %s, %s, %s);    
-        '''
-        # 쿼리 실행
-        cursor.execute(sql, (id, temp, hum, ilum))
-    # 최대값이면 한칸씩 밀기
-    else:
-        for i in range(1, MAX_SENSOR_VAL):
-            sql = '''
-            SELECT * FROM sensorval WHERE id = %s;
-            '''
-            cursor.execute(sql, i + 1)
-            # _, temp_back, hum_back, ilum_back = cursor.fetchone()
-            # print(temp_back, hum_back, ilum_back)
-            row_back = cursor.fetchone()
-            # print(row_back)
-            print(row_back)
+#     # 최대값보다 적으면 그냥 삽입
+#     if id < MAX_SENSOR_VAL + 1:
+#         sql = '''
+#         INSERT INTO sensorval VALUES
+#         (%s, %s, %s, %s);
+#         '''
+#         # 쿼리 실행
+#         cursor.execute(sql, (id, temp, hum, ilum))
+#     # 최대값이면 한칸씩 밀기
+#     else:
+#         for i in range(1, MAX_SENSOR_VAL):
+#             sql = '''
+#             SELECT * FROM sensorval WHERE id = %s;
+#             '''
+#             cursor.execute(sql, i + 1)
+#             # _, temp_back, hum_back, ilum_back = cursor.fetchone()
+#             # print(temp_back, hum_back, ilum_back)
+#             row_back = cursor.fetchone()
+#             # print(row_back)
 
-            sql = '''
-            UPDATE sensorval SET temp = %s, hum = %s, ilum = %s WHERE id = %s;
-            '''
-            # cursor.execute(sql, (temp_back, hum_back, ilum_back, i))
-            cursor.execute(sql, (row_back['temp'], row_back['hum'], row_back['ilum'], i))
-        sql = '''
-        UPDATE sensorval SET temp = %s, hum = %s, ilum = %s WHERE id = %s;
-             '''
-        cursor.execute(sql, (temp, hum, ilum, id - 1))
+#             sql = '''
+#             UPDATE sensorval SET temp = %s, hum = %s, ilum = %s WHERE id = %s;
+#             '''
+#             # cursor.execute(sql, (temp_back, hum_back, ilum_back, i))
+#             cursor.execute(sql, (row_back['temp'], row_back['hum'], row_back['ilum'], i))
+#         sql = '''
+#         UPDATE sensorval SET temp = %s, hum = %s, ilum = %s WHERE id = %s;
+#              '''
+#         cursor.execute(sql, (temp, hum, ilum, id-1))
 
-    # 커밋
-    conn.commit()
+#     # 커밋
+#     conn.commit()
 
-
-def getSensorVal(id):
-    sql = '''
-            SELECT temp, hum, ilum FROM sensorval WHERE id = %s;
-            '''
-    cursor.execute(sql, id)
-    row = cursor.fetchone()
-    return row
+# def getSensorVal(id):
+#     sql =   '''
+#             SELECT temp, hum, ilum FROM sensorval WHERE id = %s;
+#             '''
+#     cursor.execute(sql, id)
+#     row = cursor.fetchone()
+#     return row
 
 
 def appendTempVal(temp):
@@ -138,7 +136,6 @@ def appendTempVal(temp):
             # print(temp_back, hum_back, ilum_back)
             row_back = cursor.fetchone()
             # print(row_back)
-            print(row_back)
 
             sql = '''
             UPDATE tempVal SET temp = %s WHERE id = %s;
@@ -187,7 +184,6 @@ def appendHumVal(hum):
             # print(temp_back, hum_back, ilum_back)
             row_back = cursor.fetchone()
             # print(row_back)
-            print(row_back)
 
             sql = '''
             UPDATE humVal SET hum = %s WHERE id = %s;

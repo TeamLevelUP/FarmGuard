@@ -2,7 +2,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import os, logging
-from dao import selectUsers, appendUsers, getSensorVal, getTempVal, getHumVal, getIlumVal
+from dao import selectUsers, appendUsers, getTempVal, getHumVal, getIlumVal
 import xml.etree.ElementTree as elemTree
 
 # AI

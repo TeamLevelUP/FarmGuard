@@ -1,13 +1,12 @@
 import paho.mqtt.client as mqtt
 import base64
 import os
+# print(os.path.abspath('.')) # C:\FarmGuard\IoT_Controller\RPI
 import time
-# import sys
-# sys.path.append("C:/FarmGuard/Flask_Server")
-# sys.path.append("C:/FarmGuard")
-# sys.path.append("C:/FarmGuard/IoT_Controller")
-# from ...Flask_Server.dao import appendSensorVal
-from dao import appendSensorVal, appendTempVal, appendHumVal, appendIlumVal
+import sys
+sys.path.append("C:/FarmGuard/Flask_Server")
+from dao import appendTempVal, appendHumVal, appendIlumVal
+# from ...Flask_Server.dao import appendTempVal, appendHumVal, appendIlumVal # 상대경로 불가
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -18,8 +17,7 @@ def on_message(client, userdata, msg):
     # global temp; global hum; global ilum;
     #수신 받은 mqtt 메시지 내용을 str로 변환
 
-    # message의 topic을 비교하여 저장하기
-    # 를 수행해야 하지만 일단 프린트로 함 
+    # message의 topic을 비교하여 저장기능 수행
     if msg.topic == "temp":
         temp = str(msg.payload.decode("utf-8"))
         print(msg.topic, temp)
