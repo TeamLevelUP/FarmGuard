@@ -82,6 +82,8 @@ fabric.properties
 # Image_Detection_YOLO/data/2.Validation/원천데이터/05.상추/
 *.jpg
 *.jpeg
+*.png
+*.bin
 
 # 모델 및 가중치
 *.h5
@@ -95,3 +97,6 @@ venv/
 
 #Auth Keys
 keys.xml
+
+#cache
+*.pyc
