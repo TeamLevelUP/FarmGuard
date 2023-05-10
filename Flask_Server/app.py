@@ -246,14 +246,15 @@ def upload_file():
     # wrong post
     # return
     else:
-        return '''
-                            <script>
-                                // 경고창 
-                                alert("ERROR")
-                                // 이전페이지로 이동
-                                history.back()
-                            </script>
-                        '''
+        # return '''
+        #                     <script>
+        #                         // 경고창
+        #                         alert("ERROR")
+        #                         // 이전페이지로 이동
+        #                         history.back()
+        #                     </script>
+        #                 '''
+        pass
 
     # yolo학습을 위해 이미지파일 복사
     os.system("cp static/images/" + filename + " yolov5/data/images/input_image.jpg")
