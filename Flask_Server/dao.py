@@ -6,26 +6,40 @@ import os
 tree = elemTree.parse('C:/FarmGuard/Flask_Server/keys.xml')
 conn = None
 
-try:
-    conn = my.connect(host='localhost',  # 로컬 주소
-                      user='root',
-                      password=tree.find('string[@name="SQL_PASS"]').text,
-                      database='user',  # DB 스키마 이름
-                      cursorclass=my.cursors.DictCursor  # 명령어 입력을 위한 커서
-                      )
-except Exception as e:
-    print('접속오류', e)
+class db_connect:
+    def __init__(self):
+        try:
+            self.conn = my.connect(host='localhost',  # 로컬 주소
+                              user='root',
+                              password=tree.find('string[@name="SQL_PASS"]').text,
+                              database='user',  # DB 스키마 이름
+                              cursorclass=my.cursors.DictCursor  # 명령어 입력을 위한 커서
+                              )
+        except Exception as e:
+            print('접속오류', e)
 
-cursor = conn.cursor()
+        self.cursor = self.conn.cursor()
+    def closeConnection(self):
+        if self.conn:
+            self.conn.close()
+        # print('종료')
 
+    def __del__(self):
+        self.closeConnection()
+        print("db 소멸")
 
-def closeConnection():
-    if conn:
-        conn.close()
-    # print('종료')
+# db = db_connect()
+# conn = db.conn
+# cursor = db.cursor
+# del db
+
 
 
 def selectUsers(uid, upw):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     row = None  # 쿼리 결과
     # sql 실행문
     if upw is None:
@@ -43,10 +57,15 @@ def selectUsers(uid, upw):
     row = cursor.fetchone()
     # print( row )
     # 결과 리턴
+    del db
     return row
 
 
 def appendUsers(uid, upw, uname):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     sql = '''
     INSERT INTO user VALUES
         (%s, %s, %s);
@@ -54,6 +73,7 @@ def appendUsers(uid, upw, uname):
     # 쿼리 실행 후 커밋
     cursor.execute(sql, (uid, upw, uname))
     conn.commit()
+    del db
 
 
 # def appendSensorVal(temp, hum, ilum):
@@ -109,6 +129,10 @@ def appendUsers(uid, upw, uname):
 
 
 def appendTempVal(temp):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     MAX_SENSOR_VAL = 6
     sql = '''
             SELECT * FROM tempVal;
@@ -154,9 +178,14 @@ def appendTempVal(temp):
 
     # 커밋
     conn.commit()
+    del db
 
 
 def appendHumVal(hum):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     MAX_SENSOR_VAL = 6
     sql = '''
             SELECT * FROM humVal;
@@ -198,9 +227,14 @@ def appendHumVal(hum):
 
     # 커밋
     conn.commit()
+    del db
 
 
 def appendIlumVal(ilum):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     MAX_SENSOR_VAL = 6
     sql = '''
             SELECT * FROM ilumVal;
@@ -242,40 +276,60 @@ def appendIlumVal(ilum):
 
     # 커밋
     conn.commit()
+    del db
 
 
 def getTempVal(id):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     sql = '''
             SELECT temp FROM tempVal WHERE id = %s;
             '''
     cursor.execute(sql, id)
     row = cursor.fetchone()
+    del db
     return row
 
 
 def getHumVal(id):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     sql = '''
             SELECT hum FROM humVal WHERE id = %s;
             '''
     cursor.execute(sql, id)
     row = cursor.fetchone()
+    del db
     return row
 
 
 def getIlumVal(id):
+    db = db_connect()
+    conn = db.conn
+    cursor = db.cursor
+
     sql = '''
             SELECT ilum FROM ilumVal WHERE id = %s;
             '''
     cursor.execute(sql, id)
     row = cursor.fetchone()
+    del db
     return row
 
 
 if __name__ == '__main__':
     # 테스트
+    # db = db_connect()
+    # conn = db.conn
+    # cursor = db.cursor
     # row = selectUsers('rlaalstn1969@naver.com', '1234')
     # print('회원 조회 결과 : ', row)
     # 비회원 테스트(회원이 아님, 비번이 틀림, 아이디 틀림)
     # row = selectUsers('minsoo', 'wrong_password')
     # print('회원 조회 결과 : ', row)
+    # del db
     pass
