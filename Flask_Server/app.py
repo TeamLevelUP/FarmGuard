@@ -213,18 +213,21 @@ def gallery():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    print(request.form)
     # gallery num is posted
     # file의 이름을 파악함
     if 'gallery' in request.form:
         filename = request.form['gallery']
         # print(filename)
-        # print(os.getcwd() + "/static/images/" + filename)
         image_path = os.getcwd() + "/static/images/" + filename
         image_path.replace('\\', '/')
+        # print(image_path)
 
     # image is posted
     # file을 저장하고 file의 이름을 파악함
-    elif 'image' in request.form:
+    # elif 'image' in request.form: # 알 수 없는 오류로 request.form을 받아오지 못함
+    elif 'image' in request.files:
+    # else:
         file = request.files['image']
         # 사진이 업로드되있지 않으면
         if not file:
@@ -241,14 +244,14 @@ def upload_file():
         filename = secure_filename(file.filename)
         # print(type(filename)) # str
         # print(filename)       # xx.jpg
-        file.save(os.path.join("static/images", "input_image.jpg"))
-        # file.save(os.path.join("static/images", filename))
+        # file.save(os.path.join("static/images", "input_image.jpg"))
+        file.save(os.path.join("static/images", filename))
     # wrong post
     # return
     else:
         return '''
                             <script>
-                                // 경고창 
+                                // 경고창
                                 alert("ERROR")
                                 // 이전페이지로 이동
                                 history.back()
@@ -257,6 +260,7 @@ def upload_file():
 
     # yolo학습을 위해 이미지파일 복사
     os.system("cp static/images/" + filename + " yolov5/data/images/input_image.jpg")
+    print("cp static/images/" + filename + " yolov5/data/images/input_image.jpg")
 
     # 기존에 사용한 폴더 지우기
     # print(os.getcwd()) # C:\FarmGuard\Flask_Server
