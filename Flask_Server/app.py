@@ -70,6 +70,7 @@ def register():
             appendUsers(id, password, name)
             # 세션 설정
             session['userid'] = id
+            session['username'] = name
             return redirect('/')
         # 회원가입 실패시
         else:
@@ -89,15 +90,17 @@ def login():
     else:
         uid = request.form.get('userid')
         upw = request.form.get('userpassword')
+
         
         row = selectUsers(uid, upw)
-        
+        #print(row)
         # print("uid: %s" % uid)
         # print("upw: %s" % upw)
         
         if row: # 회원이면
             # 세션 설정
             session['userid'] = uid
+            session['username'] = row['userName']
             
             # 페이지 이동
             return redirect('/')
@@ -120,14 +123,22 @@ def logout():
     # print(len(session)) # 0
     return redirect('/')
 
-@app.route('/test')
-def test():
-    return render_template('test.html', userid = session['userid'])
+@app.route('/error')
+def error():
+    return render_template('error.html')
+
+@app.route('/myPage')
+def myPage():
+    return render_template('myPage.html', userid = session['userid'], username = session['username'])
 
 
 @app.route('/myfarm')
 def myfarm():
     return render_template('myfarm.html', userid = session['userid'])
+
+@app.route('/diseaseIdentification')
+def disease():
+    return render_template('diseaseIdentification.html', userid = session['userid'])
 
 @app.route('/myfarm/temp')
 def checkTemp():

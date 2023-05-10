@@ -1,4 +1,4 @@
-<!-- 다음 작업용 테스트파일- 아직 작업내용 없음 -->
+<!-- 마이 페이지 -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -33,15 +33,17 @@
       height: calc(100vh - 80px);
     }
     .container .content {
-      display: flex;
+<!--      display: flex;-->
       align-items: center;
       justify-content: center;
       position: relative;
     }
     .container img {
-      max-width: 50%;
+      max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+<!--      width: 50%;-->
+<!--     height: auto;-->
     }
     .container .buttons {
       position: absolute;
@@ -74,10 +76,28 @@
         <!--<button class="btn btn-primary">Button 4</button>-->
       </div>
     </div>
+
     <div class="container">
+      <div class="img">
+        {% if userid %}
+        <img src="static/images/free-icon-profile.png" alt="profile" style="z-index:-1">
+<!--        {% else %}-->
+        {% endif %}
+        <!--<button class="btn btn-primary">Button 4</button>-->
+      </div>
+
       <div class="content">
+        <p>
+  <h2>내정보 보기</h2>
+</p>
+        <h3>id: {{ userid }}</h3><br>
+        <h3>이름: {{ username }}</h3>
 
       </div>
     </div>
+
   </body>
 </html>
+
+
+<!--<a href="https://www.flaticon.com/kr/free-icons/" title="프로필 아이콘">프로필 아이콘  제작자: joalfa - Flaticon</a>-->
