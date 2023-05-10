@@ -18,7 +18,7 @@
         justify-content: space-between;
         width: 100%;
         height: 80px;
-        background-color: #464D5C;
+        background-color: #24292e;
         padding: 0 20px;
       }
       .header h2 {
@@ -100,7 +100,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
 		font:bold 16px "malgun gothic";
 		width:700px;
 		height:50px;
-		background: #464D5C;
+		background: #24292e;
 		color:black;
 		line-height: 50px;
 		margin:0 auto;
@@ -174,7 +174,7 @@ margin:0 auto;
 		<li><a href="#">내 정보</a>
 			<ul>
 				<li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
-				<li><a href="#">갤러리</a></li>
+				<li><a href="{{ url_for('gallery') }}">갤러리</a></li>
                 <li><a href="#">쪽지함</a></li>
 			</ul>
 		</li>
@@ -228,7 +228,7 @@ margin:0 auto;
   {% else %}
 	 <div class="container">
       <div class="content">
-        <img src="static/images/tino_.png" alt="logo" style="z-index:-1">
+        <img src="static/images/tino.png" alt="logo" style="z-index:-1">
       </div>
 
 		<div class="container">
