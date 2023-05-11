@@ -164,42 +164,42 @@ margin:0 auto;
       <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
 
 		<div id="menu">
-	<ul>
-		<li><a href="#">농장 관리</a>
-			<ul>
-				<li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
-				<li><a href="#">농장 환경 제어</a></li>
-			</ul>
-		</li>
-		<li><a href="#">내 정보</a>
-			<ul>
-				<li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
-				<li><a href="{{ url_for('gallery') }}">갤러리</a></li>
-                <li><a href="#">쪽지함</a></li>
-			</ul>
-		</li>
-		<li><a href="#">병해충 진단</a>
-			<ul>
-				<li><a href="{{url_for('disease')}}">병해충 진단</a></li>
-<!--				<li><a href="#">SUB_MENU2</a></li>-->
-<!--				<li><a href="#">SUB_MENU3</a></li>-->
-			</ul>
-		</li>
-		<li><a href="#">기타 서비스</a>
-			<ul>
-				<li><a href="#">농사 소식</a></li>
-				<li><a href="#">관련 사이트</a></li>
-			</ul>
-		</li>
-<!--		<li><a href="#">테스트</a>-->
-<!--			<ul>-->
-<!--				<li><button onclick="window.location.href='/myPage></button></li>-->
-<!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
-<!--				<li><a href="#">SUB_MENU3</a></li>-->
-<!--			</ul>-->
-<!--		</li>-->
-	</ul>
-</div>
+            <ul>
+                <li><a href="#">농장 관리</a>
+                    <ul>
+                        <li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
+                        <li><a href="#">농장 환경 제어</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">내 정보</a>
+                    <ul>
+                        <li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
+                        <li><a href="{{ url_for('gallery') }}">갤러리</a></li>
+                        <li><a href="#">쪽지함</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">병해충 진단</a>
+                    <ul>
+                        <li><a href="{{url_for('disease')}}">병해충 진단</a></li>
+        <!--				<li><a href="#">SUB_MENU2</a></li>-->
+        <!--				<li><a href="#">SUB_MENU3</a></li>-->
+                    </ul>
+                </li>
+                <li><a href="#">기타 서비스</a>
+                    <ul>
+                        <li><a href="#">농사 소식</a></li>
+                        <li><a href="#">관련 사이트</a></li>
+                    </ul>
+                </li>
+        <!--		<li><a href="#">테스트</a>-->
+        <!--			<ul>-->
+        <!--				<li><button onclick="window.location.href='/myPage></button></li>-->
+        <!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
+        <!--				<li><a href="#">SUB_MENU3</a></li>-->
+        <!--			</ul>-->
+        <!--		</li>-->
+            </ul>
+        </div>
 		<div>
         {% if userid %}
         <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>

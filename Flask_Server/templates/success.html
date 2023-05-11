@@ -80,7 +80,8 @@
             <img src="static/images/input_image.jpg" alt="input lecttuce" style="width:700px; height:700px;">
             <h3 style="text-align: center;">Image "{{ filename }}" uploaded successfully!</h3>
             <h3 style="text-align: center;">This plant is {{disease_class}}</h3>
-            <a href="{{ url_for('index') }}" style="margin-top: 20px; text-align: center;">Go back</a>
+<!--            <a href="{{ url_for('index') }}" style="margin-top: 20px; text-align: center;">Go back</a>-->
+            <a href="javascript:history.back();" style="margin-top: 20px; text-align: center;">Go back</a>
         </div>
     </div>
   </body>

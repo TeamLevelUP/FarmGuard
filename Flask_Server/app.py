@@ -34,7 +34,8 @@ def index():
         #     return render_template('index.html', userid = session['userid'])
         # else:
         #     return render_template('index.html', userid = None)
-
+# if 'userid' not in session:
+#     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -131,20 +132,55 @@ def error():
 
 @app.route('/myPage')
 def myPage():
-    # appendSensorVal(11,12,13)
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     return render_template('myPage.html', userid = session['userid'], username = session['username'])
 
 
 @app.route('/myfarm')
 def myfarm():
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     return render_template('myfarm.html', userid = session['userid'])
 
 @app.route('/diseaseIdentification')
 def disease():
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     return render_template('diseaseIdentification.html', userid = session['userid'])
 
 @app.route('/myfarm/temp')
 def checkTemp():
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     # sensorVal1 = getSensorVal(1)
     # sensorVal2 = getSensorVal(2)
     # sensorVal3 = getSensorVal(3)
@@ -200,6 +236,15 @@ def checkTemp():
 
 @app.route('/myfarm/hum')
 def checkHum():
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     # sensorVal1 = getSensorVal(1)
     # sensorVal2 = getSensorVal(2)
     # sensorVal3 = getSensorVal(3)
@@ -244,6 +289,15 @@ def checkHum():
 
 @app.route('/myfarm/ilum')
 def checkIlum():
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     # sensorVal1 = getSensorVal(1)
     # sensorVal2 = getSensorVal(2)
     # sensorVal3 = getSensorVal(3)
@@ -294,10 +348,28 @@ def checkIlum():
 
 @app.route('/gallery')
 def gallery():
+    if 'userid' not in session:
+        return '''
+                            <script>
+                                // 경고창 
+                                alert("로그인이 필요한 서비스입니다.")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
     return render_template("gallery.html", userid = session['userid'], **locals())
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    if 'userid' not in session:
+        return '''
+                    <script>
+                        // 경고창 
+                        alert("로그인이 필요한 서비스입니다.")
+                            // 이전페이지로 이동
+                        history.back()
+                    </script>
+        '''
     print(request.form)
     # gallery num is posted
     # file의 이름을 파악함
