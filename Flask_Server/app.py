@@ -10,6 +10,9 @@ import tensorflow as tf
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
+# from yolov5 import detect
+import sys
+sys.path.append("C:/FarmGuard/Image_Detection_YOLO")
 from yolov5 import detect
 
 app = Flask(__name__)
@@ -93,7 +96,6 @@ def login():
     else:
         uid = request.form.get('userid')
         upw = request.form.get('userpassword')
-
         
         row = selectUsers(uid, upw)
         #print(row)
@@ -181,12 +183,6 @@ def checkTemp():
                                 history.back()
                             </script>
                 '''
-    # sensorVal1 = getSensorVal(1)
-    # sensorVal2 = getSensorVal(2)
-    # sensorVal3 = getSensorVal(3)
-    # sensorVal4 = getSensorVal(4)
-    # sensorVal5 = getSensorVal(5)
-    # sensorVal6 = getSensorVal(6)
 
     sensorVal1 = getTempVal(1)
     sensorVal2 = getTempVal(2)
@@ -195,23 +191,7 @@ def checkTemp():
     sensorVal5 = getTempVal(5)
     sensorVal6 = getTempVal(6)
 
-    # for i in range(0,6):
-    #     pass
 
-    # temps = [{'time': '1', 'data': 28.5},
-    #          {'time': '2', 'data': 29.5},
-    #          {'time': '3', 'data': 22.5},
-    #          {'time': '4', 'data': 23.5},
-    #          {'time': '5', 'data': 25.5},
-    #          {'time': '6', 'data': 27.5},
-    #          ]
-
-    # print(sensorVal1)
-    # print(sensorVal2)
-    # print(sensorVal3)
-    # print(sensorVal4)
-    # print(sensorVal5)
-    # print(sensorVal6)
 
     temps = [{'time': '1', 'data': sensorVal1['temp'] if sensorVal1 is not None else 0},
              {'time': '2', 'data': sensorVal2['temp'] if sensorVal2 is not None else 0},
@@ -245,12 +225,6 @@ def checkHum():
                                 history.back()
                             </script>
                 '''
-    # sensorVal1 = getSensorVal(1)
-    # sensorVal2 = getSensorVal(2)
-    # sensorVal3 = getSensorVal(3)
-    # sensorVal4 = getSensorVal(4)
-    # sensorVal5 = getSensorVal(5)
-    # sensorVal6 = getSensorVal(6)
 
     sensorVal1 = getHumVal(1)
     sensorVal2 = getHumVal(2)
@@ -259,13 +233,6 @@ def checkHum():
     sensorVal5 = getHumVal(5)
     sensorVal6 = getHumVal(6)
 
-    # hums = [{'time': '1', 'data': 40},
-    #         {'time': '2', 'data': 41},
-    #         {'time': '3', 'data': 40},
-    #         {'time': '4', 'data': 41},
-    #         {'time': '5', 'data': 43},
-    #         {'time': '6', 'data': 43},
-    #         ]
 
     hums =  [{'time': '1', 'data': sensorVal1['hum'] if sensorVal1 is not None else 0},
              {'time': '2', 'data': sensorVal2['hum'] if sensorVal2 is not None else 0},
@@ -298,12 +265,6 @@ def checkIlum():
                                 history.back()
                             </script>
                 '''
-    # sensorVal1 = getSensorVal(1)
-    # sensorVal2 = getSensorVal(2)
-    # sensorVal3 = getSensorVal(3)
-    # sensorVal4 = getSensorVal(4)
-    # sensorVal5 = getSensorVal(5)
-    # sensorVal6 = getSensorVal(6)
 
     sensorVal1 = getIlumVal(1)
     sensorVal2 = getIlumVal(2)
@@ -313,19 +274,12 @@ def checkIlum():
     sensorVal6 = getIlumVal(6)
 
     # print(sensorVal1)
-    print(sensorVal2)
-    print(sensorVal3)
-    print(sensorVal4)
-    print(sensorVal5)
-    print(sensorVal6)
+    # print(sensorVal2)
+    # print(sensorVal3)
+    # print(sensorVal4)
+    # print(sensorVal5)
+    # print(sensorVal6)
 
-    # ilums = [{'time': '1', 'data': 4783},
-    #          {'time': '2', 'data': 4889},
-    #          {'time': '3', 'data': 4932},
-    #          {'time': '4', 'data': 4959},
-    #          {'time': '5', 'data': 4999},
-    #          {'time': '6', 'data': 5003},
-    #          ]
 
     ilums = [{'time': '1', 'data': sensorVal1['ilum'] if sensorVal1 is not None else 0},
            {'time': '2', 'data': sensorVal2['ilum'] if sensorVal2 is not None else 0},
@@ -370,7 +324,7 @@ def upload_file():
                         history.back()
                     </script>
         '''
-    print(request.form)
+    # print(request.form)
     # gallery num is posted
     # file의 이름을 파악함
     if 'gallery' in request.form:
@@ -415,17 +369,18 @@ def upload_file():
                             </script>
                         '''
 
+    yolo_path = "C:/FarmGuard/Image_Detection_YOLO/"
     # yolo학습을 위해 이미지파일 복사
-    os.system("cp static/images/" + filename + " yolov5/data/images/input_image.jpg")
-    print("cp static/images/" + filename + " yolov5/data/images/input_image.jpg")
+    os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
+    # print("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
     # 기존에 사용한 폴더 지우기
     # print(os.getcwd()) # C:\FarmGuard\Flask_Server
     # os.system("cd yolov5/runs/detect")
-    if os.path.isdir('yolov5/runs/detect/exp'):
-        for file in os.listdir("yolov5/runs/detect/exp"):
-            os.remove('yolov5/runs/detect/exp/' + file)
-        os.rmdir('yolov5/runs/detect/exp')
+    if os.path.isdir(yolo_path + 'yolov5/runs/detect/exp'):
+        for file in os.listdir(yolo_path + "yolov5/runs/detect/exp"):
+            os.remove(yolo_path + 'yolov5/runs/detect/exp/' + file)
+        os.rmdir(yolo_path + 'yolov5/runs/detect/exp')
 
     # 감지 여부 확인 - 감지 했으면 True 못했으면 False
     opt = detect.parse_opt()
@@ -450,10 +405,6 @@ def upload_file():
     # model = keras.models.load_model('model/model_class2_epoch7_dropout0.2.h5')
     model = keras.models.load_model('model/model_class3_epoch10_dropout0.2.h5')
 
-    # Load an image file to classify
-    # img = image.load_img('input_image/common2.jpg', target_size=(224, 224)) # 정상
-    # img = image.load_img('input_image/disease2.jpeg', target_size=(224, 224)) # 질병
-
     # print(link) # .jpg까지 저장됨
     # img = image.load_img(f'static/images/{filename}', target_size=(224, 224))
     img = image.load_img('static/images/input_image.jpg', target_size=(224, 224))
@@ -468,7 +419,7 @@ def upload_file():
 
     # predict result
     # sclerotiniarot(균핵병) downymildew(노균병)
-    disease_list = {0:'normal', 1:'sclerotiniarot', 2:'downymildew'}
+    disease_list = {0:'정상', 1:'균핵병', 2:'노균병'}
     # print("Prediction: ", prediction)
     # print("Predicted class:", predicted_class)
     disease_class = disease_list[int(predicted_class)]
@@ -476,7 +427,8 @@ def upload_file():
     # print(len(session)) # 0
         
     # 화면에 Bounding Box를 포함한 이미지 출력을 위해 복사
-    os.system("cp yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
+    # os.system("cp yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
+    os.system("cp C:/FarmGuard/Image_Detection_YOLO/yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
 
     if 'userid' in session:
         return render_template('success.html',

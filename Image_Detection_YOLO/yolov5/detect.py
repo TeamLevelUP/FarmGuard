@@ -91,6 +91,9 @@ def run(
     if is_url and is_file:
         source = check_file(source)  # download
 
+    # if detected, this is True
+    is_detected = 1
+
     # Directories
     save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
@@ -116,8 +119,7 @@ def run(
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
-    # 하나라도 감지하면 카운트
-    det_count = 0
+
     for path, im, im0s, vid_cap, s in dataset:
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
@@ -194,12 +196,12 @@ def run(
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
-                    # detect가 하나라도 됐으면 그대로 저장
-                    if len(det):
-                        cv2.imwrite(save_path, im0)
-                    # detect된게 없다면 이름을 바꿔서 저장
-                    else:
-                        cv2.imwrite(save_path.replace(".jpg", "_nodetect.jpg"), im0)
+                    # detect가 안됐으면 검출확인변수 False로 설정
+                    if not len(det):
+                        is_detected = 0
+                    # else:
+                        # cv2.imwrite(save_path.replace(".jpg", "_nodetect.jpg"), im0)
+                    cv2.imwrite(save_path, im0)
                 else:  # 'video' or 'stream'
                     if vid_path[i] != save_path:  # new video
                         vid_path[i] = save_path
@@ -229,12 +231,15 @@ def run(
         LOGGER.info(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
+    return is_detected
 
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
-    parser.add_argument('--source', type=str, default=ROOT / 'data/images', help='file/dir/URL/glob/screen/0(webcam)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/yolo5s_5/weights/best.pt', help='model path or triton URL')
+    # parser.add_argument('--source', type=str, default=ROOT / 'data/images', help='file/dir/URL/glob/screen/0(webcam)')
+    parser.add_argument('--source', type=str, default=ROOT / 'data/images/input_image.jpg', help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='(optional) dataset.yaml path')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='confidence threshold')
@@ -268,7 +273,9 @@ def parse_opt():
 
 def main(opt):
     check_requirements(exclude=('tensorboard', 'thop'))
-    run(**vars(opt))
+    no_detect_result = run(**vars(opt))
+    # 감지됐으면 0 안됐으면 1
+    return no_detect_result
 
 
 if __name__ == '__main__':
