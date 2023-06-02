@@ -89,24 +89,24 @@ def register():
                 </script>
             '''
 
-@app.route('/login', methods=['GET', 'POST']) 
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
         uid = request.form.get('userid')
         upw = request.form.get('userpassword')
-        
+
         row = selectUsers(uid, upw)
         #print(row)
         # print("uid: %s" % uid)
         # print("upw: %s" % upw)
-        
+
         if row: # 회원이면
             # 세션 설정
             session['userid'] = uid
             session['username'] = row['userName']
-            
+
             # 페이지 이동
             return redirect('/')
             # return render_template('index.html', userid = uid)
@@ -120,7 +120,7 @@ def login():
                     history.back()
                 </script>
             '''
-            
+
 @app.route('/logout')
 def logout():
     session.pop('userid', None)
@@ -313,6 +313,18 @@ def gallery():
                 '''
     return render_template("gallery.html", userid = session['userid'], **locals())
 
+@app.route('/take_photo')
+def take_photo():
+    # mqtt를 통한 사진촬영 메시지 전송
+    return '''
+                    <script>
+                        alert("사진 촬영 완료!")
+                            // 이전페이지로 이동
+                        history.back()
+                    </script>
+        '''
+    # return render_template()
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'userid' not in session:
@@ -371,8 +383,13 @@ def upload_file():
 
     yolo_path = "C:/FarmGuard/Image_Detection_YOLO/"
     # yolo학습을 위해 이미지파일 복사
-    os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
+
     # print("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
+    # print("mkdir " + yolo_path + "yolov5/data/images") # mkdir C:/FarmGuard/Image_Detection_YOLO/yolov5/data/images
+    if not os.path.isdir(yolo_path + "yolov5/data/images"):
+        os.mkdir(yolo_path + "yolov5/data/images")
+
+    os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
     # 기존에 사용한 폴더 지우기
     # print(os.getcwd()) # C:\FarmGuard\Flask_Server
@@ -387,7 +404,7 @@ def upload_file():
     # detect.main: image detection and save file, return 검출 여부
     is_detected = detect.main(opt)
     # print(is_detected)
-        
+
     # 이미지에서 상추 검출 안됐을시 리턴
     if not is_detected:
         return '''
@@ -425,7 +442,7 @@ def upload_file():
     disease_class = disease_list[int(predicted_class)]
     # return redirect(url_for('upload_success', filename = filename, disease_class = disease_class))
     # print(len(session)) # 0
-        
+
     # 화면에 Bounding Box를 포함한 이미지 출력을 위해 복사
     # os.system("cp yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
     os.system("cp C:/FarmGuard/Image_Detection_YOLO/yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")

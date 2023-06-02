@@ -1,11 +1,12 @@
 <!-- 갤러리 웹페이지 -->
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gallery</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
       .header {
         display: flex;
@@ -63,8 +64,28 @@
     .container .buttons button {
       margin-bottom: 20px;
     }
-  </style>
-      <style type="text/css">
+    /*플렉스 컨테이너 및 아이템*/
+    #flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 90%;
+    min-width: 500px;
+    border:1px dotted #FF00FF;
+　　}
+.flex-items｛
+   flex: auto;
+   min-width:500px;
+   height: 500px;
+   background:#999;
+   border-radius: 2px;
+   margin:3px;
+　}
+
+
+
+    </style>
+    <style type="text/css">
 /* 전체영역에서 여백을 없애줌 */
 	* {
 		margin: 0;
@@ -141,96 +162,110 @@ margin:0 auto;
 		text-align: center;
 }
 
-	</style>
 
-  </head>
-  <body style="background-color: #537FE7;">
-    <div class="header">
-      <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
-        <div id="menu">
-            <ul>
-                <li><a href="#">농장 관리</a>
-                    <ul>
-                        <li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
-                        <li><a href="#">농장 환경 제어</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">내 정보</a>
-                    <ul>
-                        <li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
-                        <li><a href="{{ url_for('gallery') }}">갤러리</a></li>
-                        <li><a href="#">쪽지함</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">병해충 진단</a>
-                    <ul>
-                        <li><a href="{{url_for('disease')}}">병해충 진단</a></li>
-        <!--				<li><a href="#">SUB_MENU2</a></li>-->
-        <!--				<li><a href="#">SUB_MENU3</a></li>-->
-                    </ul>
-                </li>
-                <li><a href="#">기타 서비스</a>
-                    <ul>
-                        <li><a href="#">농사 소식</a></li>
-                        <li><a href="#">관련 사이트</a></li>
-                    </ul>
-                </li>
-        <!--		<li><a href="#">테스트</a>-->
-        <!--			<ul>-->
-        <!--				<li><button onclick="window.location.href='/myPage></button></li>-->
-        <!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
-        <!--				<li><a href="#">SUB_MENU3</a></li>-->
-        <!--			</ul>-->
-        <!--		</li>-->
-            </ul>
-        </div>
-      <div>
-        {% if userid == None %}
-        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
-        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
-        {% else %}
-        <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
+
+    </style>
+
+</head>
+<body style="background-color: #537FE7;">
+<div class="header">
+    <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
+    <div id="menu">
+        <ul>
+            <li><a href="#">농장 관리</a>
+                <ul>
+                    <li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
+                    <li><a href="#">농장 환경 제어</a></li>
+                </ul>
+            </li>
+            <li><a href="#">내 정보</a>
+                <ul>
+                    <li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
+                    <li><a href="{{ url_for('gallery') }}">갤러리</a></li>
+                    <li><a href="#">쪽지함</a></li>
+                </ul>
+            </li>
+            <li><a href="#">병해충 진단</a>
+                <ul>
+                    <li><a href="{{url_for('disease')}}">병해충 진단</a></li>
+                    <!--				<li><a href="#">SUB_MENU2</a></li>-->
+                    <!--				<li><a href="#">SUB_MENU3</a></li>-->
+                </ul>
+            </li>
+            <li><a href="#">기타 서비스</a>
+                <ul>
+                    <li><a href="#">농사 소식</a></li>
+                    <li><a href="#">관련 사이트</a></li>
+                </ul>
+            </li>
+            <!--		<li><a href="#">테스트</a>-->
+            <!--			<ul>-->
+            <!--				<li><button onclick="window.location.href='/myPage></button></li>-->
+            <!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
+            <!--				<li><a href="#">SUB_MENU3</a></li>-->
+            <!--			</ul>-->
+            <!--		</li>-->
+        </ul>
+    </div>
+    <div>
+        {% if userid %}
+        <h2>{{ userid }}</h2>
+        <button onclick="location.href='/logout' " class="btn btn-primary">로그아웃</button>
         <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+        {% else %}
+        <button onclick="window.location.href='/login'" class="btn btn-primary">로그인</button>
+        <button onclick="window.location.href='/register'" class="btn btn-secondary">회원가입</button>
         {% endif %}
         <!--<button class="btn btn-primary">Button 4</button>-->
-      </div>
     </div>
-    <div class="container">
-      <div class="content">
-
-  <img src="static/images/gallery1.jpg" alt="gallery1" style="width:300px; height:300px;">
-        <img src="static/images/gallery2.jpg" alt="gallery2" style="width:300px; height:300px;">
-        <img src="static/images/gallery3.jpg" alt="gallery3" style="width:300px; height:300px;">
-        <img src="static/images/gallery4.jpg" alt="gallery4" style="width:300px; height:300px;">
-        <img src="static/images/gallery5.jpg" alt="gallery5" style="width:300px; height:300px;">
-
+</div>
+<div class="container">
+    <div class="content">
+        <div class="flex-container">
+            <img src="static/images/gallery1.jpg" alt="gallery1">
             <form action="{{ url_for('upload_file') }}" method="post">
-            <div class="form-group">
-                <button type="submit" name="gallery" value="gallery1.jpg" class="btn btn-primary">image1 Upload</button>
-            </div>
-        </form>
-        <form action="{{ url_for('upload_file') }}" method="post">
-            <div class="form-group">
-                <button type="submit" name="gallery" value="gallery2.jpg" class="btn btn-primary">image2 Upload</button>
-            </div>
-        </form>
-        <form action="{{ url_for('upload_file') }}" method="post">
-            <div class="form-group">
-                <button type="submit" name="gallery" value="gallery3.jpg" class="btn btn-primary">image3 Upload</button>
-            </div>
-        </form>
-        <form action="{{ url_for('upload_file') }}" method="post">
-            <div class="form-group">
-                <button type="submit" name="gallery" value="gallery4.jpg" class="btn btn-primary">image4 Upload</button>
-            </div>
-        </form>
-        <form action="{{ url_for('upload_file') }}" method="post">
-            <div class="form-group">
-                <button type="submit" name="gallery" value="gallery5.jpg" class="btn btn-primary">image5 Upload</button>
-            </div>
-        </form>
-      </div>
-    </div>
+                <div class="form-group">
+                    <button type="submit" name="gallery" value="gallery1.jpg" class="btn btn-primary">image1 검사</button>
+                </div>
+            </form>
+        </div>
+        <div class="flex-container">
+            <img src="static/images/gallery2.jpg" alt="gallery2">
+            <form action="{{ url_for('upload_file') }}" method="post">
+                <div class="form-group">
+                    <button type="submit" name="gallery" value="gallery2.jpg" class="btn btn-primary">image2 검사</button>
+                </div>
+            </form>
+        </div>
+        <div class="flex-container">
+            <img src="static/images/gallery3.jpg" alt="gallery3">
+            <form action="{{ url_for('upload_file') }}" method="post">
+                <div class="form-group">
+                    <button type="submit" name="gallery" value="gallery3.jpg" class="btn btn-primary">image3 검사</button>
+                </div>
+            </form>
+        </div>
+        <div class="flex-container">
+            <img src="static/images/gallery4.jpg" alt="gallery4">
+            <form action="{{ url_for('upload_file') }}" method="post">
+                <div class="form-group">
+                    <button type="submit" name="gallery" value="gallery4.jpg" class="btn btn-primary">image4 검사</button>
+                </div>
+            </form>
+        </div>
+        <div class="flex-container">
+            <img src="static/images/gallery5.jpg" alt="gallery5">
+            <form action="{{ url_for('upload_file') }}" method="post">
+                <div class="form-group">
+                    <button type="submit" name="gallery" value="gallery5.jpg" class="btn btn-primary">image5 검사</button>
+                </div>
+            </form>
+        </div>
 
-  </body>
+        <button onclick="location.href='/take_photo' " class="btn btn-primary">사진 찍기</button>
+
+    </div>
+</div>
+
+</body>
 </html>

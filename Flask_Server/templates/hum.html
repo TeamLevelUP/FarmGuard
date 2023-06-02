@@ -1,12 +1,13 @@
 <!-- 농장 조회- 습도 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>My Flask Page</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Flask Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <style>
       .header {
         display: flex;
@@ -60,9 +61,11 @@
       .container .buttons button {
         margin-bottom: 20px;
       }
-  </style>
 
-        <style type="text/css">
+
+    </style>
+
+    <style type="text/css">
 /* 전체영역에서 여백을 없애줌 */
 	* {
 		margin: 0;
@@ -139,64 +142,67 @@ margin:0 auto;
 		text-align: center;
 }
 
-	</style>
 
-  </head>
-  <body>
-    <div class="header">
-      <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
-      <div id="menu">
-            <ul>
-                <li><a href="#">농장 관리</a>
-                    <ul>
-                        <li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
-                        <li><a href="#">농장 환경 제어</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">내 정보</a>
-                    <ul>
-                        <li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
-                        <li><a href="{{ url_for('gallery') }}">갤러리</a></li>
-                        <li><a href="#">쪽지함</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">병해충 진단</a>
-                    <ul>
-                        <li><a href="{{url_for('disease')}}">병해충 진단</a></li>
-        <!--				<li><a href="#">SUB_MENU2</a></li>-->
-        <!--				<li><a href="#">SUB_MENU3</a></li>-->
-                    </ul>
-                </li>
-                <li><a href="#">기타 서비스</a>
-                    <ul>
-                        <li><a href="#">농사 소식</a></li>
-                        <li><a href="#">관련 사이트</a></li>
-                    </ul>
-                </li>
-        <!--		<li><a href="#">테스트</a>-->
-        <!--			<ul>-->
-        <!--				<li><button onclick="window.location.href='/myPage></button></li>-->
-        <!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
-        <!--				<li><a href="#">SUB_MENU3</a></li>-->
-        <!--			</ul>-->
-        <!--		</li>-->
-            </ul>
-        </div>
-        <div>
-          {% if userid %}
-          <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
-          <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
-          {% else %}
-          <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
-          <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
-          {% endif %}
-        <!--<button class="btn btn-primary">Button 4</button>-->
-      </div>
+
+    </style>
+
+</head>
+<body>
+<div class="header">
+    <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
+    <div id="menu">
+        <ul>
+            <li><a href="#">농장 관리</a>
+                <ul>
+                    <li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
+                    <li><a href="#">농장 환경 제어</a></li>
+                </ul>
+            </li>
+            <li><a href="#">내 정보</a>
+                <ul>
+                    <li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
+                    <li><a href="{{ url_for('gallery') }}">갤러리</a></li>
+                    <li><a href="#">쪽지함</a></li>
+                </ul>
+            </li>
+            <li><a href="#">병해충 진단</a>
+                <ul>
+                    <li><a href="{{url_for('disease')}}">병해충 진단</a></li>
+                    <!--				<li><a href="#">SUB_MENU2</a></li>-->
+                    <!--				<li><a href="#">SUB_MENU3</a></li>-->
+                </ul>
+            </li>
+            <li><a href="#">기타 서비스</a>
+                <ul>
+                    <li><a href="#">농사 소식</a></li>
+                    <li><a href="#">관련 사이트</a></li>
+                </ul>
+            </li>
+            <!--		<li><a href="#">테스트</a>-->
+            <!--			<ul>-->
+            <!--				<li><button onclick="window.location.href='/myPage></button></li>-->
+            <!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
+            <!--				<li><a href="#">SUB_MENU3</a></li>-->
+            <!--			</ul>-->
+            <!--		</li>-->
+        </ul>
     </div>
-    <div class="container">
-          <div style="width:70%;">
-            <canvas id="canvas"></canvas>
-          </div>
+    <div>
+        {% if userid %}
+        <h2>{{ userid }}</h2>
+        <button onclick="location.href='/logout' " class="btn btn-primary">로그아웃</button>
+        <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+        {% else %}
+        <button onclick="window.location.href='/login'" class="btn btn-primary">로그인</button>
+        <button onclick="window.location.href='/register'" class="btn btn-secondary">회원가입</button>
+        {% endif %}
+        <!--<button class="btn btn-primary">Button 4</button>-->
+    </div>
+</div>
+<div class="container">
+    <div style="width:70%;">
+        <canvas id="canvas"></canvas>
+    </div>
 
     <script>
     new Chart(document.getElementById("canvas"), {
@@ -243,10 +249,12 @@ margin:0 auto;
             }
         }
     });
+
+
     </script>
-      <div class="content">
-          <h2>{{userid}}님의 농장 정보입니다.</h2>
-      </div>
+    <div class="content">
+        <h2>{{userid}}님의 농장 정보입니다.</h2>
     </div>
-  </body>
+</div>
+</body>
 </html>

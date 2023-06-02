@@ -1,13 +1,13 @@
 <!-- 로그인 -->
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-    integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb5u9DDQvNQ6Zya2M6aUksdQRVvoxMfoo" 
-    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb5u9DDQvNQ6Zya2M6aUksdQRVvoxMfoo"
+          crossorigin="anonymous">
     <style>
       .form-signin {
         max-width: 330px;
@@ -41,18 +41,19 @@
         border-top-left-radius: 0;
         border-top-right-radius: 0;
       }
+
     </style>
-  </head>
-  <body class="text-center">
-    <form class="form-signin" method="post" action="/login">
-      <img class="mb-4" src="/static/images/TUK.png" alt="" width="250" height="250">
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="userid" class="sr-only">Username</label>
-      <input type="text" id="userid" name="userid" class="form-control" placeholder="Username" required autofocus>
-      <label for="userpassword" class="sr-only">Password</label>
-      <input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password" required>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
-    </form>
-  </body>
+</head>
+<body class="text-center">
+<form class="form-signin" method="post" action="/login">
+    <img class="mb-4" src="/static/images/TUK.png" alt="" width="250" height="250">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="userid" class="sr-only">Username</label>
+    <input type="text" id="userid" name="userid" class="form-control" placeholder="Username" required autofocus>
+    <label for="userpassword" class="sr-only">Password</label>
+    <input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+</form>
+</body>
 </html>

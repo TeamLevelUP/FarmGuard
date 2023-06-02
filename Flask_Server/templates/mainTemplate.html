@@ -1,11 +1,12 @@
 <!-- 기본 양식 참고 -->
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Flask Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
       .header {
         display: flex;
@@ -57,27 +58,29 @@
     .container .buttons button {
       margin-bottom: 20px;
     }
-  </style>
 
-  </head>
-  <body>
-    <div class="header">
-      <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
-      <div>
-        {% if userid == None %}
-        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
-        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
-        {% else %}
-        <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
+    </style>
+
+</head>
+<body>
+<div class="header">
+    <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
+    <div>
+        {% if userid %}
+        <h2>{{ userid }}</h2>
+        <button onclick="location.href='/logout' " class="btn btn-primary">로그아웃</button>
         <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+        {% else %}
+        <button onclick="window.location.href='/login'" class="btn btn-primary">로그인</button>
+        <button onclick="window.location.href='/register'" class="btn btn-secondary">회원가입</button>
         {% endif %}
         <!--<button class="btn btn-primary">Button 4</button>-->
-      </div>
     </div>
-    <div class="container">
-      <div class="content">
+</div>
+<div class="container">
+    <div class="content">
 
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>
