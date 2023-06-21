@@ -1,0 +1,236 @@
+<!-- 메인 홈페이지 -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Flask Page</title>
+	  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 80px;
+        background-color: #24292e;
+        padding: 0 20px;
+      }
+      .header h2 {
+        color: white;
+        margin:
+          0;
+      }
+      .header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 10px;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 80px);
+      }
+      .container .content {
+        color: black;
+        display: flex;
+<!--        flex-direction: column;-->
+<!--        flex-wrap: wrap;-->
+<!--        align-items: center;-->
+<!--        justify-content: center;-->
+<!--        position: relative;-->
+      }
+      .container img {
+        max-width: 50%;
+        max-height: 50%;
+        object-fit: contain;
+      }
+
+      .img2 {
+        max-width: 50%;
+        max-height: 50%;
+        z-index:-1;
+<!--        height: 20%;-->
+<!--        width: 20%;-->
+<!--        background-image: url('img/signup.jpeg');-->
+<!--        background-repeat : no-repeat;-->
+<!--        background-size : cover;-->
+      }
+
+      .container .buttons {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      .container .buttons button {
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+  </style>
+
+	  <style type="text/css">
+/* 전체영역에서 여백을 없애줌 */
+	* {
+		margin: 0;
+		padding: 0;
+	}
+/* ul li태그에 리스트 스타일을 없앰 */
+	ul li{
+		list-style: none;
+	}
+/* a태그에 텍스트 밑줄을 없애고 색상을 #333 */
+	a {
+		text-decoration: none;
+		color:#333;
+	}
+/* 글자크기를 16px 맑은 고딕 굵게하고 width넓이 700, 높이 50만큼 배경색은 #원래#24292e, 글자색은 검정색, 라인높이50px
+menu박스 가운데정렬, 글자가운데 정렬 */
+	#menu {
+		font:bold 16px "malgun gothic";
+		width:700px;
+		height:50px;
+		background: #24292e;
+		color:black;
+		line-height: 50px;
+		margin:0 auto;
+		text-align: center;
+	}
+
+/* menu태그 자식의 ul의 자식 li를 왼쪽정렬과 넓이 140설정 */
+	#menu > ul > li {
+		float:left;
+		width:140px;
+		position:relative;
+		font-size: 20px;
+	}
+
+	#menu > ul > li > ul {
+		width:130px;
+		display:none;
+		position: absolute;
+		font-size:16px;
+		background: #83AFA6;
+	}
+
+	#menu > ul > li:hover > ul {
+		display:block;
+	}
+
+	#menu > ul > li > ul > li:hover {
+		background: #D3A284;
+		transition: ease 1s;
+		}
+
+	.container ul li::before {
+  content: "◆ ";
+  margin-right: 5px;
+  color: navy;
+  font-size:14px;
+}
+
+ ul, ol{
+ font-size:30px;
+ font-weight:bold;
+ }
+
+body{
+background-color: #E5E5E5;
+}
+
+.container .box{
+font-family: 'Dongle', sans-serif;
+font-size:50px;
+background-color: #B3A78C;
+margin:0 auto;
+		text-align: center;
+}
+
+	</style>
+  </head>
+
+  <body>
+    <div class="header">
+      <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
+
+		<div id="menu">
+	<ul>
+		<li><a href="#">농장 관리</a>
+			<ul>
+				<li><a href="{{ url_for('myfarm') }}">농장 환경 조회</a></li>
+				<li><a href="{{ url_for('farmcontrol') }}">농장 환경 제어</a></li>
+			</ul>
+		</li>
+		<li><a href="#">내 정보</a>
+			<ul>
+				<li><a href="{{ url_for('myPage') }}">마이페이지</a></li>
+				<li><a href="{{ url_for('gallery') }}">갤러리</a></li>
+                <li><a href="#">쪽지함</a></li>
+			</ul>
+		</li>
+		<li><a href="#">병해충 진단</a>
+			<ul>
+				<li><a href="{{url_for('disease')}}">병해충 진단</a></li>
+<!--				<li><a href="#">SUB_MENU2</a></li>-->
+<!--				<li><a href="#">SUB_MENU3</a></li>-->
+			</ul>
+		</li>
+		<li><a href="#">기타 서비스</a>
+			<ul>
+				<li><a href="#">농사 소식</a></li>
+				<li><a href="#">관련 사이트</a></li>
+			</ul>
+		</li>
+<!--		<li><a href="#">테스트</a>-->
+<!--			<ul>-->
+<!--				<li><button onclick="window.location.href='/myPage></button></li>-->
+<!--				<li><a href="{{ url_for('myPage') }}">SUB_MENU2</a></li>-->
+<!--				<li><a href="#">SUB_MENU3</a></li>-->
+<!--			</ul>-->
+<!--		</li>-->
+	</ul>
+</div>
+		<div>
+        {% if userid %}
+        <h2>{{ userid }}</h2> <button onclick="location.href='/logout' " class="btn btn-primary">Logout</button>
+        <button class="btn btn-success" onclick="window.location.href='/myfarm'">농장 조회</button>
+        {% else %}
+        <button onclick="window.location.href='/login'" class="btn btn-primary">Login</button>
+        <button onclick="window.location.href='/register'" class="btn btn-secondary">Register</button>
+        {% endif %}
+        <!--<button class="btn btn-primary">Button 4</button>-->
+      </div>
+
+    </div>
+<!--위 코드까지가 헤더-->
+
+    <div class="container">
+      <div class="content">
+<!--          <h2>환경 제어</h2>-->
+      </div>
+
+	  <div class="container">
+        <form class="form-signin" method="post" action="farmcontrol/ilum">
+          <img class="mb-4" src="/static/images/lightSensor.png" alt="전구" width="250" height="250">
+          <h1 class="h3 mb-3 font-weight-normal">밝기 조절</h1>
+          <label for="ilumdata" class="sr-only">ilumdata</label>
+          <input type="text" id="ilumdata" name="ilumdata" class="form-control" placeholder="조도값입력 0~1023" required autofocus>
+<!--          <label for="userpassword" class="sr-only">Password</label>-->
+<!--          <input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password" required>-->
+          <button class="btn btn-lg btn-primary btn-block" type="submit">기기에 전송</button>
+<!--          <p class="mt-5 mb-3 text-muted">&copy; 2023</p>-->
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

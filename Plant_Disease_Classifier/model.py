@@ -1,5 +1,6 @@
 # import tensorflow as tf
 import numpy as np
+import cv2
 import os
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
@@ -35,12 +36,18 @@ for class_folder in os.listdir(data_path):
             json_data = json.load(f_json)
 
         img = image.load_img(os.path.join(class_path, image_file), target_size=(224, 224))
-        xtl = json_data["annotations"]["points"]["xtl"]
-        ytl = json_data["annotations"]["points"]["ytl"]
-        xbr = json_data["annotations"]["points"]["xbl"]
-        ybr = json_data["annotations"]["points"]["ybl"]
+        # (json)메타데이터에서 읽어온 x좌표 y좌표 224x224로 정규화
+        xtl = int(json_data["annotations"]["points"][0]["xtl"] * 224 / 4032)
+        ytl = int(json_data["annotations"]["points"][0]["ytl"] * 224 / 3024)
+        xbr = int(json_data["annotations"]["points"][0]["xbr"] * 224 / 4032)
+        ybr = int(json_data["annotations"]["points"][0]["ybr"] * 224 / 3024)
+
+        img = np.array(img)
         img = img[xtl:xbr,ytl:ybr]
-        images.append(np.array(img))
+        img = cv2.resize(img, (224,224), 0, 0, interpolation=cv2.INTER_LINEAR)
+        print(np.shape(img))
+        # images.append(np.array(img))
+        images.append(img)
 
         # print(label_file_path)
         # 0:normal 9:sclerotiniarot(균핵병) 10:downymildew(노균병)

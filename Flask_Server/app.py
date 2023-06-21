@@ -159,6 +159,43 @@ def myfarm():
                 '''
     return render_template('myfarm.html', userid = session['userid'])
 
+
+@app.route('/farmcontrol')
+def farmcontrol():
+    return render_template('farmcontrol.html', userid=session['userid'])
+
+
+@app.route('/farmcontrol/ilum', methods=['GET', 'POST'])
+def ilumControl():
+    # 페이지에서 입력한 조도값 자료형:int
+    ilum_data = int(request.form.get('ilumdata'))
+    if ilum_data is None:
+        return '''
+                            <script>
+                                // 오류창 
+                                alert("데이터를 입력하세요!")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
+    if ilum_data < 0:
+        ilum_data = 0
+    elif ilum_data > 1023:
+        ilum_data = 1023
+
+    # print(ilum_data)
+
+    # MQTT 메시지 전송부분
+
+    return '''
+                    <script>
+                        // 완료창 
+                        alert("전송 완료!")
+                            // 이전페이지로 이동
+                        history.back()
+                    </script>
+        '''
+
 @app.route('/diseaseIdentification')
 def disease():
     if 'userid' not in session:
@@ -388,6 +425,7 @@ def upload_file():
     # print("mkdir " + yolo_path + "yolov5/data/images") # mkdir C:/FarmGuard/Image_Detection_YOLO/yolov5/data/images
     if not os.path.isdir(yolo_path + "yolov5/data/images"):
         os.mkdir(yolo_path + "yolov5/data/images")
+    print("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
     os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
