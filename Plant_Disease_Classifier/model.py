@@ -25,16 +25,24 @@ for class_folder in os.listdir(data_path):
     for image_file in os.listdir(class_path):
         print("Find image now...    folder %d / %d  image %d / %d" %
               (folder_num, len(os.listdir(data_path)), image_num, len(os.listdir(class_path))))
-        img = image.load_img(os.path.join(class_path, image_file), target_size=(224, 224))
-        images.append(np.array(img))
 
         label_path = class_path.replace("원천", "라벨링")
         label_file = image_file.replace("jpg", "jpg.json").replace("jpeg", "jpeg.json").replace("JPG", "JPG.json").replace("JPEG", "JPEG.json")
         label_file_path = label_path + "/" + label_file
         label_file_path = label_file_path.replace("\\", "/")
-        # print(label_file_path)
+
         with open(label_file_path, 'r') as f_json:
             json_data = json.load(f_json)
+
+        img = image.load_img(os.path.join(class_path, image_file), target_size=(224, 224))
+        xtl = json_data["annotations"]["points"]["xtl"]
+        ytl = json_data["annotations"]["points"]["ytl"]
+        xbr = json_data["annotations"]["points"]["xbl"]
+        ybr = json_data["annotations"]["points"]["ybl"]
+        img = img[xtl:xbr,ytl:ybr]
+        images.append(np.array(img))
+
+        # print(label_file_path)
         # 0:normal 9:sclerotiniarot(균핵병) 10:downymildew(노균병)
         class_of_disease = json_data["annotations"]["disease"]
         # 정해진 3개이외의 질병이 나오면 추가하지 않음
