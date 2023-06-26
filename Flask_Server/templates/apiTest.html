@@ -1,10 +1,10 @@
-<!-- 갤러리 웹페이지 -->
+<!-- 마이 페이지 -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gallery</title>
+    <title>My Flask Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
@@ -28,27 +28,23 @@
       margin-left: 10px;
     }
     .container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 80px);
-}
-.container img:nth-child(1) {
-  grid-row: 1 / span 2;
-  grid-column: 1 / span 2;
-}
-    .container .content {
       display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 80px);
+    }
+    .container .content {
+<!--      display: flex;-->
       align-items: center;
       justify-content: center;
       position: relative;
     }
     .container img {
-      max-width: 50%;
+      max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+<!--      width: 50%;-->
+<!--     height: auto;-->
     }
     .container .buttons {
       position: absolute;
@@ -64,27 +60,9 @@
     .container .buttons button {
       margin-bottom: 20px;
     }
-    /*플렉스 컨테이너 및 아이템*/
-    #flex-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 90%;
-    min-width: 500px;
-    border:1px dotted #FF00FF;
-　　}
-.flex-items｛
-   flex: auto;
-   min-width:500px;
-   height: 500px;
-   background:#999;
-   border-radius: 2px;
-   margin:3px;
-　}
-
-
 
     </style>
+
     <style type="text/css">
 /* 전체영역에서 여백을 없애줌 */
 	* {
@@ -163,11 +141,10 @@ margin:0 auto;
 }
 
 
-
     </style>
 
 </head>
-<body style="background-color: #537FE7;">
+<body>
 <div class="header">
     <h2><a href="{{ url_for('index') }}">Farmguard</a></h2>
     <div id="menu">
@@ -219,53 +196,114 @@ margin:0 auto;
         <!--<button class="btn btn-primary">Button 4</button>-->
     </div>
 </div>
-<div class="container">
-    <div class="content">
-        <div class="flex-container">
-            <img src="static/images/gallery1.jpg" alt="gallery1">
-            <form action="{{ url_for('upload_file') }}" method="post">
-                <div class="form-group">
-                    <button type="submit" name="gallery" value="gallery1.jpg" class="btn btn-primary">image1 검사</button>
-                </div>
-            </form>
-        </div>
-        <div class="flex-container">
-            <img src="static/images/gallery2.jpg" alt="gallery2">
-            <form action="{{ url_for('upload_file') }}" method="post">
-                <div class="form-group">
-                    <button type="submit" name="gallery" value="gallery2.jpg" class="btn btn-primary">image2 검사</button>
-                </div>
-            </form>
-        </div>
-        <div class="flex-container">
-            <img src="static/images/gallery3.jpg" alt="gallery3">
-            <form action="{{ url_for('upload_file') }}" method="post">
-                <div class="form-group">
-                    <button type="submit" name="gallery" value="gallery3.jpg" class="btn btn-primary">image3 검사</button>
-                </div>
-            </form>
-        </div>
-        <div class="flex-container">
-            <img src="static/images/gallery4.jpg" alt="gallery4">
-            <form action="{{ url_for('upload_file') }}" method="post">
-                <div class="form-group">
-                    <button type="submit" name="gallery" value="gallery4.jpg" class="btn btn-primary">image4 검사</button>
-                </div>
-            </form>
-        </div>
-        <div class="flex-container">
-            <img src="static/images/gallery5.jpg" alt="gallery5">
-            <form action="{{ url_for('upload_file') }}" method="post">
-                <div class="form-group">
-                    <button type="submit" name="gallery" value="gallery5.jpg" class="btn btn-primary">image5 검사</button>
-                </div>
-            </form>
-        </div>
+<!--<h1>시흥시 정왕1동 날씨정보</h1>-->
+<!--<div class="container">-->
+    <h1>시흥시 정왕1동 날씨정보</h1>
+    <script>
+var currentTime = new Date();
+var currentHours = currentTime.getHours()-1;
+var time = currentHours *1000;
 
-        <button onclick="location.href='/take_photo' " class="btn btn-primary">사진 찍기</button>
 
-    </div>
+var xhr = new XMLHttpRequest();
+var url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'; /*URL*/
+var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'zAYoX57zxX7eVnmp26YBAGcZXzqFv0Lyeaj5agkVRYrFoUSrHdbpSPLI46p9ntJjHwpsJJqTBMLMR0%2FvI%2BqbqQ%3D%3D'; /*Service Key*/
+queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /**/
+queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
+queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent('20230622'); /**/
+queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent(time); /**/
+queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('56'); /**/
+queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('122'); /**/
+xhr.open('GET', url + queryParams);
+xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        var weatherData = JSON.parse(this.responseText);
+        displayWeatherData(weatherData);
+    }
+    console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
+};
+xhr.send('');
+
+function displayWeatherData(weatherData) {
+    var weatherDiv = document.getElementById('weatherData');
+
+    // Clear existing data in the weatherDiv
+    weatherDiv.innerHTML = '';
+
+
+
+var baseDate = weatherData.response.body.items.item[0].baseDate;
+
+var dateText = document.createElement('p');
+dateText.innerHTML = '기준 일자: ' + baseDate;
+
+weatherDiv.appendChild(dateText);
+
+
+    // Iterate through the weather data and create text elements 타임 한번만-for문 밖에
+var baseTime = weatherData.response.body.items.item[0].baseTime;
+
+var timeText = document.createElement('p');
+timeText.innerHTML = '기준 시각: ' + baseTime;
+
+weatherDiv.appendChild(timeText);
+
+
+// 기온
+var totalTemperature = 0;
+var temperatureCount = 0;
+// 습도
+var totalHumidity = 0;
+var humidityCount = 0;
+
+    // Iterate through the weather data and create text elements
+    for (var i = 0; i < weatherData.response.body.items.item.length; i++) {
+        var item = weatherData.response.body.items.item[i];
+
+<!--        var timeText = document.createElement('p');-->
+<!--        timeText.innerHTML = 'Time: ' + item.baseTime;-->
+
+        var tempText = document.createElement('p');
+        var category = item.category;
+        if (category === "T1H") {
+            var temperature = item.fcstValue;
+            totalTemperature += parseInt(temperature);
+            temperatureCount++;
+<!--            tempText.innerHTML = '기온: ' + item.fcstValue;-->
+        }
+
+        var humidityText = document.createElement('p');
+        if (category === "REH") {
+            var humidity = item.fcstValue;
+            totalHumidity += parseInt(humidity);
+            humidityCount++;
+<!--            humidityText.innerHTML = '습도: ' + item.fcstValue;-->
+        }
+
+<!--        weatherDiv.appendChild(timeText);-->
+        weatherDiv.appendChild(tempText);
+        weatherDiv.appendChild(humidityText);
+    }
+    var averageTemperature = totalTemperature / temperatureCount;
+    var averageTemperatureText = document.createElement('p');
+    averageTemperatureText.innerHTML = '평균 기온: ' + averageTemperature.toFixed(2); // 소수점 2자리까지 출력
+    weatherDiv.appendChild(averageTemperatureText);
+
+    // 평균 계산
+    var averageHumidity = totalHumidity / humidityCount;
+
+    // 평균 습도 출력
+    var averageHumidityText = document.createElement('p');
+    averageHumidityText.innerHTML = '평균 습도: ' + averageHumidity.toFixed(2); // 소수점 2자리까지 출력
+    weatherDiv.appendChild(averageHumidityText);
+}
+</script>
+<div id="weatherData"></div>
 </div>
 
-</body>
+<!--</body>-->
 </html>
+
+
+<!--<a href="https://www.flaticon.com/kr/free-icons/" title="프로필 아이콘">프로필 아이콘  제작자: joalfa - Flaticon</a>-->

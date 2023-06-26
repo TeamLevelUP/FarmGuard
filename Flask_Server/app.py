@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import os, logging
 from dao import selectUsers, appendUsers, getTempVal, getHumVal, getIlumVal
 import xml.etree.ElementTree as elemTree
+import paho.mqtt.client as mqtt
 
 # AI
 import tensorflow as tf
@@ -19,6 +20,12 @@ app = Flask(__name__)
 #Parse XML
 tree = elemTree.parse('keys.xml')
 app.secret_key = tree.find('string[@name="secret_key"]').text
+broker_address = "58.225.135.14"
+broker_port = 3456
+
+mqtt = mqtt.Client("PC")
+mqtt.connect(broker_address, broker_port)
+# mqtt.
 
 # @app.route('/')
 # def before_
@@ -186,7 +193,7 @@ def ilumControl():
     # print(ilum_data)
 
     # MQTT 메시지 전송부분
-
+    mqtt.publish("ilumPoint", ilum_data)
     return '''
                     <script>
                         // 완료창 
@@ -353,6 +360,7 @@ def gallery():
 @app.route('/take_photo')
 def take_photo():
     # mqtt를 통한 사진촬영 메시지 전송
+    mqtt.publish("camera", "go")
     return '''
                     <script>
                         alert("사진 촬영 완료!")
@@ -361,6 +369,16 @@ def take_photo():
                     </script>
         '''
     # return render_template()
+
+@app.route('/apiTest')
+def apiTest():
+    return render_template('apiTest.html', userid = session['userid'])
+
+@app.route('/show')
+def show():
+    return render_template('show.html', userid = session['userid'])
+
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -477,7 +495,8 @@ def upload_file():
     disease_list = {0:'정상', 1:'균핵병', 2:'노균병'}
     # print("Prediction: ", prediction)
     # print("Predicted class:", predicted_class)
-    disease_class = disease_list[int(predicted_class)]
+    predicted_class = int(predicted_class)
+    disease_class = disease_list[predicted_class]
     # return redirect(url_for('upload_success', filename = filename, disease_class = disease_class))
     # print(len(session)) # 0
 
@@ -487,10 +506,10 @@ def upload_file():
 
     if 'userid' in session:
         return render_template('success.html',
-                               filename = filename, disease_class = disease_class, userid = session['userid'])
+                               filename = filename, disease_class = disease_class, predicted_class=predicted_class, userid = session['userid'])
     else:
         return render_template('success.html',
-                               filename=filename, disease_class=disease_class)
+                               filename=filename, disease_class=disease_class, predicted_class = predicted_class)
 
 
 # @app.route('/success/<filename>')
