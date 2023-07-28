@@ -8,7 +8,7 @@ label_path = 'datasets/val/annotations'
 
 # Define the classes
 # disease_dict = {0:"normal", 9:"downymildew", 10:"sclerotiniarot"}
-# disease_dict = {0: "normal"}
+# disease_dict = {0:"정상", 9:"노균병", 10:"균핵병"}
 # downymildew:노균병 sclerotiniarot:균핵병
 
 # 라벨 불러오기
@@ -30,7 +30,10 @@ for label_file in os.listdir(label_path):
 
     # json 파일에서 disease class 가져오기
     # print(json_data["annotations"]["disease"])
-    # disease_class = json_data["annotations"]["disease"]
+    # 0: 정상 / 1(9): 노균병 / 2(10): 균핵병
+    disease_class = int(json_data["annotations"]["disease"]) % 8
+    # print(disease_class)
+    # time.sleep(0.5)
 
     # 원본파일 경로 구하기
     file_path = "C:/FarmGuard/Image_Detection_YOLO/" + label_path.replace("labels", "images")\
@@ -57,8 +60,8 @@ for label_file in os.listdir(label_path):
                    json_data["annotations"]["points"][0]["ytl"]) / height
 
     # annotation
-    # annotation_line = "%s %s,%s,%s,%s,%d" % (file_path, xtl, ytl, xbr, ybr, disease_class)
-    annotation_line = "0 %f %f %f %f" % (x_center, y_center, width_norm, height_norm)
+    annotation_line = "%d %f %f %f %f" % (disease_class, x_center, y_center, width_norm, height_norm)
+    # annotation_line = "0 %f %f %f %f" % (x_center, y_center, width_norm, height_norm)
     # print(annotation_line)
 
     # annotation 입력

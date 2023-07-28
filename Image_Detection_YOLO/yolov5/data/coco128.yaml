@@ -24,8 +24,8 @@ test:  # test images (optional)
 # Classes
 names:
   0: lettuce
-  # 1: downymildew
-  # 2: sclerotiniarot
+  1: downymildew
+  2: sclerotiniarot
 
 
 
