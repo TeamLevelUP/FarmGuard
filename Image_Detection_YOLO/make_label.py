@@ -2,8 +2,9 @@ import os
 import json
 import time
 
-# label_path = 'datasets/train/lettuce_13932/annotations'
-label_path = 'datasets/val/annotations'
+label_path = 'datasets/train/lettuce_13932/annotations'
+# label_path = 'datasets/train/lettuce_345/annotations'
+# label_path = 'datasets/val/annotations'
 # images, tags, labels = [], [], []
 
 # Define the classes
@@ -32,6 +33,8 @@ for label_file in os.listdir(label_path):
     # print(json_data["annotations"]["disease"])
     # 0: 정상 / 1(9): 노균병 / 2(10): 균핵병
     disease_class = int(json_data["annotations"]["disease"]) % 8
+    if disease_class > 2:
+        disease_class=0
     # print(disease_class)
     # time.sleep(0.5)
 

@@ -443,7 +443,7 @@ def upload_file():
     # print("mkdir " + yolo_path + "yolov5/data/images") # mkdir C:/FarmGuard/Image_Detection_YOLO/yolov5/data/images
     if not os.path.isdir(yolo_path + "yolov5/data/images"):
         os.mkdir(yolo_path + "yolov5/data/images")
-    print("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
+    # print("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
     os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
@@ -458,11 +458,18 @@ def upload_file():
     # 감지 여부 확인 - 감지 했으면 True 못했으면 False
     opt = detect.parse_opt()
     # detect.main: image detection and save file, return 검출 여부
-    is_detected = detect.main(opt)
-    # print(is_detected)
+    # detected_class = detect.main(opt)
+    # print(detected_class)
+    predicted_class = detect.main(opt)
+    # 이거 헷갈렸는데 detect.main의 결과값이 클래스가 아니라 검출한 개수라서 다시 찾아봐야함
+    # print(predicted_class)
 
+    disease_list = {0: '정상', 1: '균핵병', 2: '노균병'}
+    # predicted_class = int(predicted_class)
+    disease_class = disease_list[int(predicted_class)]
     # 이미지에서 상추 검출 안됐을시 리턴
-    if not is_detected:
+    # if not detected_class:
+    if not predicted_class:
         return '''
                     <script>
                         // 경고창 
@@ -472,33 +479,10 @@ def upload_file():
                     </script>
         '''
 
-    # keras-이미지에서 상추 검출시 질병 예측 시작
-
-    # Load the saved model
-    # model = keras.models.load_model('model/model_class2_epoch7_dropout0.2.h5')
-    model = keras.models.load_model('model/model_class3_epoch10_dropout0.2.h5')
-
-    # print(link) # .jpg까지 저장됨
-    # img = image.load_img(f'static/images/{filename}', target_size=(224, 224))
-    img = image.load_img('static/images/input_image.jpg', target_size=(224, 224))
-
-    img_array = np.array(img)
-    img_array = img_array.astype('float32') / 255.0
-    img_array = np.expand_dims(img_array, axis = 0)
-
-    # Use the model to make a prediction
-    prediction = model.predict(img_array)
-    predicted_class = np.argmax(prediction[0])
-
-    # predict result
-    # sclerotiniarot(균핵병) downymildew(노균병)
-    disease_list = {0:'정상', 1:'균핵병', 2:'노균병'}
-    # print("Prediction: ", prediction)
-    # print("Predicted class:", predicted_class)
-    predicted_class = int(predicted_class)
-    disease_class = disease_list[predicted_class]
-    # return redirect(url_for('upload_success', filename = filename, disease_class = disease_class))
-    # print(len(session)) # 0
+    # 필요한 산출물
+    # predicted_class: 0 1 2 로 나뉘는 질병의 클래스
+    # disease_class: 정상 균핵병 노균병 으로 나뉘는 질병명으로 predicted_class를 이용해 딕셔너리에서 도출
+    # filename: 입력한 파일명
 
     # 화면에 Bounding Box를 포함한 이미지 출력을 위해 복사
     # os.system("cp yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")

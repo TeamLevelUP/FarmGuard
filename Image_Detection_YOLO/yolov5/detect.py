@@ -28,7 +28,7 @@ Usage - formats:
                                  yolov5s_paddle_model       # PaddlePaddle
 """
 # cmd 명령어
-# python detect.py --weights runs/train/yolo5s/train_13932_val_200/weights/best.pt --img 640 --conf 0.25 --source data/images
+# python detect.py --weights runs/train/yolo5m/weights/best.pt --img 640 --conf 0.25 --source data/images
 
 import argparse
 import os
@@ -237,7 +237,7 @@ def run(
 def parse_opt():
     parser = argparse.ArgumentParser()
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/yolo5s_5/weights/best.pt', help='model path or triton URL')
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/yolo5l/weights/best.pt', help='model path or triton URL')
     # parser.add_argument('--source', type=str, default=ROOT / 'data/images', help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--source', type=str, default=ROOT / 'data/images/input_image.jpg', help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='(optional) dataset.yaml path')
