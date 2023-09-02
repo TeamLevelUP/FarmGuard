@@ -199,12 +199,12 @@ margin:0 auto;
         <!--    <img src="static/images/{{filename}}" alt="lecttuce" style="width:700px; height:700px;">-->
         <img src="static/images/input_image.jpg" alt="input lecttuce" style="width:700px; height:700px;">
         <h3 style="text-align: center;">이미지 "{{ filename }}"가 성공적으로 업로드되었습니다.</h3>
-        <h3 style="text-align: center;">이 식물은 {{disease_class}}으로 판단되었습니다.</h3>
-        {% if predicted_class == 1 %}
-        <a href="https://ncpms.rda.go.kr/npms/ImageSearchInfoR4.np?detailKey=D00000964&moveKey=&queryFlag=V&upperNm=%EC%B1%84%EC%86%8C&kncrCode=VC021005&kncrNm=%EC%83%81%EC%B6%94&nextAction=%2Fnpms%2FImageSearchDtlR4.np&finalAction=&flagCode=S&sPriyClCode=" style="color: red;">균핵병 더 알아보기</a>
-        {% elif predicted_class == 2 %}
-        <a href="https://ncpms.rda.go.kr/npms/ImageSearchInfoR4.np?detailKey=D00000957&moveKey=&queryFlag=V&upperNm=%EC%B1%84%EC%86%8C&kncrCode=VC021005&kncrNm=%EC%83%81%EC%B6%94&nextAction=%2Fnpms%2FImageSearchDtlR4.np&finalAction=&flagCode=S&sPriyClCode=" style="color: red;">노균병 더 알아보기</a>
-        {% endif %}
+<!--        <h3 style="text-align: center;">이 식물은 {{disease_class}}으로 판단되었습니다.</h3>-->
+<!--        {% if predicted_class == 1 %}-->
+<!--        <a href="https://ncpms.rda.go.kr/npms/ImageSearchInfoR4.np?detailKey=D00000964&moveKey=&queryFlag=V&upperNm=%EC%B1%84%EC%86%8C&kncrCode=VC021005&kncrNm=%EC%83%81%EC%B6%94&nextAction=%2Fnpms%2FImageSearchDtlR4.np&finalAction=&flagCode=S&sPriyClCode=" style="color: red;">균핵병 더 알아보기</a>-->
+<!--        {% elif predicted_class == 2 %}-->
+<!--        <a href="https://ncpms.rda.go.kr/npms/ImageSearchInfoR4.np?detailKey=D00000957&moveKey=&queryFlag=V&upperNm=%EC%B1%84%EC%86%8C&kncrCode=VC021005&kncrNm=%EC%83%81%EC%B6%94&nextAction=%2Fnpms%2FImageSearchDtlR4.np&finalAction=&flagCode=S&sPriyClCode=" style="color: red;">노균병 더 알아보기</a>-->
+<!--        {% endif %}-->
         <!--            <a href="{{ url_for('index') }}" style="margin-top: 20px; text-align: center;">Go back</a>-->
         <a href="javascript:history.back();" style="margin-top: 20px; text-align: center;">Go back</a>
     </div>

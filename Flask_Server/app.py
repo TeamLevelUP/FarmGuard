@@ -15,6 +15,7 @@ from tensorflow.keras.preprocessing import image
 import sys
 sys.path.append("C:/FarmGuard/Image_Detection_YOLO")
 from yolov5 import detect
+import shutil
 
 app = Flask(__name__)
 #Parse XML
@@ -368,16 +369,16 @@ def take_photo():
                         history.back()
                     </script>
         '''
+@app.route('/show')
+def show():
+    return render_template('show.html', userid = session['userid'])
+
+
     # return render_template()
 
 @app.route('/apiTest')
 def apiTest():
     return render_template('apiTest.html', userid = session['userid'])
-
-@app.route('/show')
-def show():
-    return render_template('show.html', userid = session['userid'])
-
 
 
 @app.route('/upload', methods=['POST'])
@@ -445,7 +446,8 @@ def upload_file():
         os.mkdir(yolo_path + "yolov5/data/images")
     # print("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
 
-    os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
+    # os.system("cp static/images/" + filename + " " + yolo_path + "yolov5/data/images/input_image.jpg")
+    shutil.copy("static/images/" + filename, yolo_path + "yolov5/data/images/input_image.jpg")
 
     # 기존에 사용한 폴더 지우기
     # print(os.getcwd()) # C:\FarmGuard\Flask_Server
@@ -461,7 +463,7 @@ def upload_file():
     # detected_class = detect.main(opt)
     # print(detected_class)
     predicted_class = detect.main(opt)
-    # 이거 헷갈렸는데 detect.main의 결과값이 클래스가 아니라 검출한 개수라서 다시 찾아봐야함
+    # detect.main의 결과값은 클래스가 아닌 검출한 개수
     # print(predicted_class)
 
     disease_list = {0: '정상', 1: '균핵병', 2: '노균병'}
@@ -486,14 +488,18 @@ def upload_file():
 
     # 화면에 Bounding Box를 포함한 이미지 출력을 위해 복사
     # os.system("cp yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
-    os.system("cp C:/FarmGuard/Image_Detection_YOLO/yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
+    # os.system("cp C:/FarmGuard/Image_Detection_YOLO/yolov5/runs/detect/exp/input_image.jpg static/images/input_image.jpg")
+    shutil.copy("C:/FarmGuard/Image_Detection_YOLO/yolov5/runs/detect/exp/input_image.jpg", "static/images/input_image.jpg")
+
 
     if 'userid' in session:
         return render_template('success.html',
-                               filename = filename, disease_class = disease_class, predicted_class=predicted_class, userid = session['userid'])
+                               # filename = filename, disease_class = disease_class, predicted_class=predicted_class, userid = session['userid'])
+                               filename = filename, userid = session['userid'])
     else:
         return render_template('success.html',
-                               filename=filename, disease_class=disease_class, predicted_class = predicted_class)
+                               # filename=filename, predicted_class = predicted_class)
+                               filename=filename)
 
 
 # @app.route('/success/<filename>')

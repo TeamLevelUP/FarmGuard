@@ -53,9 +53,13 @@ def on_message(client, userdata, msg):
             # os.system("ls")
             for i in range(1, gallery_image_num):
                 # print("cp %sgallery%d.jpg %sgallery%d.jpg" % (gallery_path, i+1, gallery_path, i))
-                os.system("cp %sgallery%d.jpg %sgallery%d.jpg" % (gallery_path, i+1, gallery_path, i))
+                # os.system("cp %sgallery%d.jpg %sgallery%d.jpg" % (gallery_path, i+1, gallery_path, i))
+                gallery_image_name_back = "%sgallery%d.jpg" % (gallery_path, i+1)
+                gallery_image_name_front = "%sgallery%d.jpg" % (gallery_path, i)
+                shutil.copy(gallery_image_name_back, gallery_image_name_front)
             # os.system("cd C:/FarmGuard/IoT_Controller/RPI")
-            os.system("cp output.png C:/FarmGuard/Flask_Server/static/images/gallery5.jpg")
+            # os.system("cp output.png C:/FarmGuard/Flask_Server/static/images/gallery5.jpg")
+            shutil.copy("output.png", "C:/FarmGuard/Flask_Server/static/images/gallery5.jpg")
         # db에 추가
         # appendSensorVal(temp, hum, ilum)
     # time.sleep(5)
