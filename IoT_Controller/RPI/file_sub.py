@@ -4,6 +4,7 @@ import os
 # print(os.path.abspath('.')) # C:\FarmGuard\IoT_Controller\RPI
 import time
 import sys
+import shutil
 sys.path.append("C:/FarmGuard/Flask_Server")
 from dao import appendTempVal, appendHumVal, appendIlumVal
 # from ...Flask_Server.dao import appendTempVal, appendHumVal, appendIlumVal # 상대경로 불가

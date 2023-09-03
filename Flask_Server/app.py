@@ -5,6 +5,7 @@ import os, logging
 from dao import selectUsers, appendUsers, getTempVal, getHumVal, getIlumVal
 import xml.etree.ElementTree as elemTree
 import paho.mqtt.client as mqtt
+import time
 
 # AI
 import tensorflow as tf
@@ -21,11 +22,12 @@ app = Flask(__name__)
 #Parse XML
 tree = elemTree.parse('keys.xml')
 app.secret_key = tree.find('string[@name="secret_key"]').text
-broker_address = "58.225.135.14"
-broker_port = 3456
-
+# mqtt 당일생성 당일종료
+# broker_address = "58.225.135.14"
+# broker_port = 3456
+#
 mqtt = mqtt.Client("PC")
-mqtt.connect(broker_address, broker_port)
+# mqtt.connect(broker_address, broker_port)
 # mqtt.
 
 # @app.route('/')
@@ -193,16 +195,30 @@ def ilumControl():
 
     # print(ilum_data)
 
-    # MQTT 메시지 전송부분
-    mqtt.publish("ilumPoint", ilum_data)
-    return '''
-                    <script>
-                        // 완료창 
-                        alert("전송 완료!")
-                            // 이전페이지로 이동
-                        history.back()
-                    </script>
-        '''
+    mqtt.connect("58.225.135.14", 3456)
+    try:
+        # MQTT 메시지 전송부분
+        mqtt.publish("ilumPoint", ilum_data)
+        time.sleep(0.5)
+        return '''
+                            <script>
+                                // 완료창 
+                                alert("전송 완료!")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
+    except:
+        print("\n\n보릿자3루\n\n\n")
+        return '''
+                            <script>
+                                // 완료창 
+                                alert("전송 실패!")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
+
 
 @app.route('/diseaseIdentification')
 def disease():
@@ -508,4 +524,5 @@ def upload_file():
 #
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    # app.run(debug = True)
+    app.run()
