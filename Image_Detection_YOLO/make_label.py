@@ -31,7 +31,7 @@ for label_file in os.listdir(label_path):
 
     # json 파일에서 disease class 가져오기
     # print(json_data["annotations"]["disease"])
-    # 0: 정상 / 1(9): 노균병 / 2(10): 균핵병
+    # 0: 정상 / 1(9): 균핵병 / 2(10): 노균병
     disease_class = int(json_data["annotations"]["disease"]) % 8
     if disease_class > 2:
         disease_class=0
