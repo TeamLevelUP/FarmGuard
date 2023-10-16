@@ -64,14 +64,15 @@ def on_message(client, userdata, msg):
         # db에 추가
         # appendSensorVal(temp, hum, ilum)
     # time.sleep(5)
-
+    else :
+        print(msg.payload)
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
 # client.connect("localhost", 1883, 60)
-client.connect("58.225.135.14", 3456, 60)
-# client.connect(192.168.0.15, 1883, 60)
+# client.connect("58.225.135.14", 3456, 60)
+client.connect("192.168.23.143", 1883, 60)
 
 
 client.loop_forever()

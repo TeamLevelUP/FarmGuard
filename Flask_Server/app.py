@@ -195,7 +195,8 @@ def ilumControl():
 
     # print(ilum_data)
 
-    mqtt.connect("58.225.135.14", 3456)
+    # mqtt.connect("58.225.135.14", 3456)
+    mqtt.connect("192.168.23.143", 1883)
     try:
         # MQTT 메시지 전송부분
         mqtt.publish("ilumPoint", ilum_data)
@@ -377,14 +378,42 @@ def gallery():
 @app.route('/take_photo')
 def take_photo():
     # mqtt를 통한 사진촬영 메시지 전송
-    mqtt.publish("camera", "go")
-    return '''
-                    <script>
-                        alert("사진 촬영 완료!")
-                            // 이전페이지로 이동
-                        history.back()
-                    </script>
-        '''
+    # mqtt.publish("camera", "go")
+    # mqtt.publish("카메라가되나안디나","go")
+    # print("dd")
+    # return '''
+    #                 <script>
+    #                     alert("사진 촬영 완료!")
+    #                         // 이전페이지로 이동
+    #                     history.back()
+    #                 </script>
+    #     '''
+    # print(ilum_data)
+
+    mqtt.connect("192.168.23.143", 1883)
+    # mqtt.connect("58.225.135.14", 3456)
+    try:
+        # MQTT 메시지 전송부분
+        mqtt.publish("camera", "go")
+        time.sleep(0.5)
+        return '''
+                            <script>
+                                // 완료창 
+                                alert("촬영 요청 전송 완료!")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
+    except:
+        print("\n\n보릿자3루\n\n\n")
+        return '''
+                            <script>
+                                // 완료창 
+                                alert("전송 실패!")
+                                    // 이전페이지로 이동
+                                history.back()
+                            </script>
+                '''
 @app.route('/show')
 def show():
     return render_template('show.html', userid = session['userid'])
